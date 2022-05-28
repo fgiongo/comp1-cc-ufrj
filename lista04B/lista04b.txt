@@ -1,0 +1,442 @@
+/*
+ * 	Programa: L04e01b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: exercicio de re-escrever for loop usando while:
+ * 	o programa imprime os numeros de 1 a 4, exceto o numero 2
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int i = 0;
+	while (i <= 20)
+	{
+		i++;
+		if (i == 2) continue;
+		if (i == 5) break;
+		printf("i = %d\n", i);
+	}
+	return 0;
+}
+
+/* Saida
+
+   i = 1
+   i = 3
+   i = 4
+
+*/
+
+/*
+ * 	Programa: L04e02b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: Este programa le a idade de um numero indeterminado de pessoas e
+ * 	calcula o numero de pessoas, a idade media do grupo, a menor idade e a
+ * 	maior idade.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int i, match, numPessoas = 0, idadeMedia = 0, menorIdade, maiorIdade;
+
+	do
+	{
+		printf("Entre com o valor da idade: ");
+		match = scanf("%d", &i);
+		if (match == 0) continue;
+		if (i < 0) continue;
+		if (i == 0) break;
+		idadeMedia += i;
+		if (numPessoas == 0)
+		{
+			menorIdade = i;
+			maiorIdade = i;
+		}
+		menorIdade = (menorIdade > i) ? i : menorIdade;
+		maiorIdade = (maiorIdade < i) ? i : maiorIdade;
+		numPessoas++;
+	}
+	while (1);
+
+	idadeMedia /= numPessoas;
+
+	printf("Numero de pessoas: %d\n", numPessoas);
+	printf("Idade media do grupo: %d\n", idadeMedia);
+	printf("Menor idade: %d\n", menorIdade);
+	printf("Maior idade: %d\n", maiorIdade);
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o valor da idade: 10
+   Entre com o valor da idade: 20
+   Entre com o valor da idade: 40
+   Entre com o valor da idade: 0
+   Numero de pessoas: 3
+   Idade media do grupo: 23
+   Menor idade: 10
+   Maior idade: 40
+
+*/
+
+/*
+ * 	Programa: L04e03b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: Este programa le 3 notas e imprime a media. O programa termina
+ * 	quando o usuario inclui uma nota negativa.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	float media = 0.0, nota = 0.0;
+	int numNotas = 0, match, c;
+	while (numNotas < 3)
+	{
+		printf("Inserir nota: ");
+		match = scanf("%f", &nota);
+		if (nota < 0) return 1;
+		media += nota;
+		c = getchar();
+		while (c != '\n') c = getchar();
+		if (match == 0) continue;
+		numNotas++;
+	}
+
+	media /= numNotas;
+	printf("Media: %.2f\n", media);
+	return 0;
+}
+
+/* Saida
+
+   Inserir nota: 30
+   Inserir nota: 90
+   Inserir nota: 75
+   Media: 65.00
+
+*/
+
+/*
+ * 	Programa: L04e04b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/05/2022
+ * 	Descrição: O programa calcula o valor total a ser pago pelo cliente.
+ * 	O programa recebe um codigo para determinar o tipo de cliente e aplica
+ * 	descontos de acordo (10% para funcionarios e 5% para vips).
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	float item, subtotal = 0.00;
+	int match, codigoDoCliente, c = 0;
+
+	do
+	{
+		printf("Entre codigo do cliente: (1) para comum, (2) para funcionario ou (3) para VIP\n");
+		match = scanf("%d", &codigoDoCliente);
+	}
+	while (match == 0 || codigoDoCliente < 1 || codigoDoCliente > 3);
+	
+	c = getchar();
+	while (c != '\n') c = getchar();
+
+	do
+	{
+		printf("Entre valor do proximo item (entre 0 para encerrar): ");
+		match = scanf("%f", &item);
+		if (match == 0) continue;
+		if (item == 0) break;
+		subtotal += item;
+
+	}
+	while(1);
+
+	switch (codigoDoCliente)
+	{
+		case 1:
+			break;
+
+		case 2:
+			printf("Desconto de funcionario:\nValor original: %.2f\n", subtotal);
+			subtotal *= 0.9;
+			break;
+			
+		case 3:
+			printf("Desconto de VIP:\nValor original: %.2f\n", subtotal);
+			subtotal *= 0.95;
+			break;
+	}
+
+	printf("Valor a pagar: %.2f\n", subtotal);
+
+	return 0;
+}
+
+/* Saida
+
+Entre codigo do cliente: (1) para comum, (2) para funcionario ou (3) para VIP
+2
+Entre valor do proximo item (entre 0 para encerrar): 20.00
+Entre valor do proximo item (entre 0 para encerrar): 10.00
+Entre valor do proximo item (entre 0 para encerrar): 20.00
+Entre valor do proximo item (entre 0 para encerrar): 0
+Desconto de funcionario:
+Valor original: 50.00
+Valor a pagar: 45.00
+
+*/
+
+/*
+ * 	Programa: L04e05b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/05/2022
+ * 	Descrição: O programa imprime o nome do mes, de acordo com o numero
+ * 	digitado pelo usuario.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int mes, match;
+
+	do
+	{
+		printf("Entre com o numero do mes: ");
+		match = scanf("%d", &mes);
+	}
+	while (match == 0 || mes < 1 || mes > 12);
+
+	switch (mes)
+	{
+		case 1:
+			printf("Janeiro\n");
+			break;
+		case 2:
+			printf("Fevereiro\n");
+			break;
+		case 3:
+			printf("Marco\n");
+			break;
+		case 4:
+			printf("Abril\n");
+			break;
+		case 5:
+			printf("Maio\n");
+			break;
+		case 6:
+			printf("Junho\n");
+			break;
+		case 7:
+			printf("Julho\n");
+			break;
+		case 8:
+			printf("Agosto\n");
+			break;
+		case 9:
+			printf("Setembro\n");
+			break;
+		case 10:
+			printf("Outubro\n");
+			break;
+		case 11:
+			printf("Novembro\n");
+			break;
+		case 12:
+			printf("Dezembro\n");
+			break;
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero do mes: 8
+   Agosto
+
+*/
+
+/*
+ * 	Programa: L04e06b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/02/2022
+ * 	Descrição: Programa de conversao de base numerica. Apresenta uma lista de opcoes
+ * 	1. decimal para hex
+ * 	2. hex para decimal
+ * 	3. decimal para octal
+ * 	4. octal para decimal
+ * 	5. encerra
+ *
+ * 	O programa pede um numero na base escolhida e apresenta-lo na base desejada.
+ * 	Em seguida, o programa pergunta ao usuario se ele deseja retornar ao menu
+ * 	principal ou finalizar o programa.
+ */
+
+#include <stdio.h>
+#include <math.h>
+
+int main (void)
+{
+	int start = 1, c, match, opcao;
+	long unsigned int entrada, mask;
+
+	do
+	{
+		if (!start)
+		{
+			c = getchar();
+			while (c != '\n') c = getchar();
+			start = 0;
+		}
+		
+		printf(
+				"<Conversao de base>\n1. decimal para hexadecimal\n2. hexadecimal para decimal\n3. decimal para octal\n4. octal para decimal\n5. encerra\nEntre a opcao desejada: "
+		      );
+		match = scanf("%d", &opcao);
+
+		if (match == 0)
+		{
+			c = getchar();
+			while (c != '\n') c = getchar();
+			continue;
+		}
+
+		if (opcao < 1 || opcao > 5) continue;
+
+		if (opcao == 5) break;
+
+		c = getchar();
+		while (c != '\n') c = getchar();
+
+		switch (opcao)
+		{
+			case 1:
+				do
+				{
+					printf("Decimal: ");
+					scanf("%lu", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Hexadecimal: %lx\n", entrada);
+				break;
+
+			case 2:
+				do
+				{
+					printf("Hexadecimal: ");
+					scanf("%lx", &entrada);
+				}
+				while (match == 0);
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Decimal: %lu\n", entrada);
+				break;
+
+			case 3:
+				do
+				{
+					printf("Decimal: ");
+					scanf("%lu", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Octal: %lo\n", entrada);
+				break;
+
+			case 4:
+				do
+				{
+					printf("Octal: ");
+					scanf("%lo", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Decimal: %lu\n", entrada);
+				break;
+		}
+	}
+	while (1);
+
+	return 0;
+}
+
+/*
+
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 1
+Decimal: 20
+Hexadecimal: 14
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 2
+Hexadecimal: ff
+Decimal: 255
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 3
+Decimal: 10
+Octal: 12
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 4
+Octal: 88
+Decimal: 10
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 4
+Octal: 77
+Decimal: 63
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 5
+
+*/

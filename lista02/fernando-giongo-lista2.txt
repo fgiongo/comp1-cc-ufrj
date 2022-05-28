@@ -1,0 +1,506 @@
+/*
+ * 	Programa: ex05.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 30/04/2022
+ * 	Descrição: Este programa calcula a nota de um aluno de uma disciplina
+ * 	cuja formula e a seguinte:
+ * 
+ * 	notaFinal = 0.8 * prova + 0.2 * (t1 + t2 + t3) / 3
+ *
+ * 	considerando o numero de testes igual a 3
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+
+	float teste1, teste2, teste3, prova, notaFinal;
+	int match;
+
+	/* Aqui vao os comandos do programa */
+	
+	printf("Insira a nota do teste 1 (de 0.00 a 10.00):\n");
+	match = scanf("%f", &teste1);
+
+	if (!match || teste1 < 0 || teste1 > 10)
+	{
+		printf("Valor invalido.\n");
+		return 1;
+	}
+
+	printf("Insira a nota do teste 2 (de 0.00 a 10.00):\n");
+	match = 0;
+	match = scanf("%f", &teste2);
+
+	if (!match || teste2 < 0 || teste2 > 10)
+	{
+		printf("Valor invalido.\n");
+		return 1;
+	}
+
+	printf("Insira a nota do teste 3 (de 0.00 a 10.00):\n");
+	match = 0;
+	match = scanf("%f", &teste3);
+
+	if (!match || teste3 < 0 || teste3 > 10)
+	{
+		printf("Valor invalido.\n");
+		return 1;
+	}
+
+	printf("Insira a nota da prova (de 0.00 a 10.00):\n");
+	match = 0;
+	match = scanf("%f", &prova);
+
+	if (!match || prova < 0 || prova > 10)
+	{
+		printf("Valor invalido.\n");
+		return 1;
+	}
+
+	notaFinal = 0.8 * prova + 0.2 * (teste1 + teste2 + teste3) / 3;
+
+	printf("\n");
+	printf("Prova : %.1f\n", prova);
+	printf("Teste 1: %.1f\n", teste1);
+	printf("Teste 2: %.1f\n", teste2);
+	printf("Teste 3: %.1f\n", teste3);
+	printf("Nota Final: %.1f\n", notaFinal);
+
+	return 0;
+}
+
+/*
+	Saídas:
+	
+	Em caso de valores válidos:
+
+		Insira a nota do teste 1 (de 0.00 a 10.00):
+		1.23
+		Insira a nota do teste 2 (de 0.00 a 10.00):
+		4.56
+		Insira a nota do teste 3 (de 0.00 a 10.00):
+		7.89
+		Insira a nota da prova (de 0.00 a 10.00):
+		10.00
+
+		Prova : 10.0
+		Teste 1: 1.2
+		Teste 2: 4.6
+		Teste 3: 7.9
+		Nota Final: 8.9
+
+	Em caso de valores inválidos:
+
+		Insira a nota do teste 1 (de 0.00 a 10.00):
+		75.00
+		Valor invalido.
+*/
+
+/*
+ * 	Programa: ex06.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 30/04/2022
+ * 	Descrição: Este programa imprime a soma de todos os números inteiros
+ * 	entre 0 e N (não inclusive). O valor de N é lido do teclado.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+
+	long n, soma;
+	int match;
+
+	/* Aqui vao os comandos do programa */
+
+	printf("Inserir um numero inteiro: ");
+	match = scanf("%li", &n);
+
+	if (!match)
+	{
+		printf("Valor invalido.\n");
+		return 1;
+	}
+
+	if (n < 2 && n > -2)
+	{
+		soma = 0;
+		printf("Soma de todos os numeros inteiros entre 0 e %li (nao incluindo %li) = %li\n", n, n, soma);
+		return 0;
+	}
+
+	if (n > 1)
+	{
+		soma = n + n * (n - 3) / 2;
+		printf("Soma de todos os numeros inteiros entre 0 e %li (não incluindo %li) = %li\n", n, n, soma);
+		return 0;
+	}
+
+	if (n < -1)
+	{
+		soma = n - n * (n + 3) / 2;
+		printf("Soma de todos os numeros inteiros entre 0 e %li (não incluindo %li) = %li\n", n, n, soma);
+		return 0;
+	}
+
+	return 2;
+}
+
+/*
+	Saidas:
+	
+	Em caso de entrada valida:
+
+		Inserir um numero inteiro: 10
+		Soma de todos os numeros inteiros entre 0 e 10 (não incluindo 10) = 45
+	
+	Em caso de entrada invalida:
+
+		Inserir um numero inteiro: sete
+		Valor invalido.
+*/
+
+/*
+ * 	Programa: ex07.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 30/04/2022
+ * 	Descrição: Le tres notas de um aluno, calcula sua media
+ * 	e informa se ele foi aprovado ou nao.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+
+	float notaAluno, mediaAluno;
+	int match;
+
+	/* Aqui vao os comandos do programa */
+
+	printf("Nota 1 (de 0 a 10): ");
+	match = scanf("%f", &notaAluno);
+
+	if (!match || notaAluno < 0 || notaAluno > 10)
+	{
+		printf("Nota invalida.\n");
+		return 1;
+	}
+       	
+	mediaAluno = 0;
+	mediaAluno += notaAluno;
+
+	printf("Nota 2 (de 0 a 10): ");
+	match = 0;
+	match = scanf("%f", &notaAluno);
+
+	if (!match || notaAluno < 0 || notaAluno > 10)
+	{
+		printf("Nota invalida.\n");
+		return 1;
+	}
+
+	mediaAluno += notaAluno;
+
+	printf("Nota 3 (de 0 a 10): ");
+	match = 0;
+	match = scanf("%f", &notaAluno);
+
+	if (!match || notaAluno < 0 || notaAluno > 10)
+	{
+		printf("Nota invalida.\n");
+		return 1;
+	}
+
+	mediaAluno += notaAluno;
+	mediaAluno = mediaAluno / 3;
+
+	if (mediaAluno >= 5)
+	{
+		printf("Aprovado\n");
+	}
+	else
+	{
+		printf("Reprovado\n");
+	}
+
+	return 0;
+}
+
+/*
+	Saídas:
+
+	Em caso de valores validos:
+
+		Nota 1 (de 0 a 10): 4.6
+		Nota 2 (de 0 a 10): 3.2
+		Nota 3 (de 0 a 10): 7.8
+		Aprovado
+
+	Em caso de valores invalidos:
+
+		Nota 1 (de 0 a 10): 46
+		Nota invalida.
+*/
+
+/*
+ * 	Programa: ex08.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 30/04/2022
+ * 	Descrição: calcula media de aluno e informa se ele foi aprovado ou nao.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+
+	float notaAluno, mediaAluno = 0.0;
+	int notasLidas = 0, quantProvas, match;
+
+	/* Aqui vao os comandos do programa */
+	
+	printf("Quantidade de provas: ");
+	match = scanf("%d", &quantProvas);
+
+	if (!match)
+	{
+		printf("Valor inválido\n");
+		return 1;
+	}
+
+	while (notasLidas < quantProvas)
+	{
+		printf("Nota %d (de 0.0 a 10.0): ", notasLidas + 1);
+		match = scanf("%f", &notaAluno);
+
+		if (!match || notaAluno < 0 || notaAluno > 10)
+		{
+			printf("Valor invalido.\n");
+			return 2;
+		}
+
+		mediaAluno += notaAluno;
+		notasLidas++;
+	}
+
+	mediaAluno /= quantProvas;
+	printf("A media do aluno foi %.1f\n", mediaAluno);
+
+	if (mediaAluno >= 5.0)
+	{
+		printf("Aprovado\n");
+	}
+	else
+	{
+		printf("Reprovado\n");
+	}
+
+	return 0;
+}
+
+/*
+	Saidas:
+
+	Em caso de valores validos:
+
+		Quantidade de provas: 4
+		Nota 1 (de 0.0 a 10.0): 3.5
+		Nota 2 (de 0.0 a 10.0): 6.4
+		Nota 3 (de 0.0 a 10.0): 8.1
+		Nota 4 (de 0.0 a 10.0): 5.5
+		A media do aluno foi 5.9
+		Aprovado
+
+	Em caso de valores invalidos:
+
+		Quantidade de provas: 4
+		Nota 1 (de 0.0 a 10.0): 11
+		Valor invalido.
+*/
+
+/*
+ * 	Programa: ex09.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 01/05/2022
+ * 	Descrição: Este programa le as datas de nascimento
+ * 	de dois amigos e indica quem é o mais velho.
+ */
+
+#include <stdio.h>
+
+#define MAX_DIA 31
+#define MAX_MES 12
+#define MAX_ANO 2022
+#define DURACAO_MESES 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+
+	int dia1, mes1, ano1;
+	int dia2, mes2, ano2;
+	int match;
+	int duracao_do_mes[] = {DURACAO_MESES};
+
+	/* Aqui vao os comandos do programa */
+
+	/* entrada e validacao basica */
+	printf("Entre com duas datas (dd mm aaaa):\n");
+	match = scanf("%d %d %d", &dia1, &mes1, &ano1);
+
+	if (match != 3)
+	{
+		printf("Formato: dia mes ano\n");
+		return 1;
+	}
+
+	match =  scanf("%d %d %d", &dia2, &mes2, &ano2);
+
+	if (match != 3)
+	{
+		printf("Formato: dia mes ano\n");
+		return 1;
+	}
+
+	/* validando apenas valores positivos */
+	if (
+	    dia1 <= 0
+	    || dia2 <= 0
+	    || mes1 <= 0
+	    || mes2 <= 0
+	    || ano1 <= 0
+	    || ano2 <= 0
+	   )
+	{
+		printf("Data invalida\n");
+		return 2;
+	}
+
+	/* validando valores de mes */
+	if (mes1 > MAX_MES || mes2 > MAX_MES)
+	{
+		printf("Data invalida\n");
+		return 2;
+	}
+
+	/* Anos bissextos: todos os anos multiplos de 400
+	 *                 ou (todos os anos multiplos de 4
+	 *                 e não multiplos de 100)
+	 */
+
+	/* ajustando valores para ano bissexto */
+	if (ano1 % 400 == 0 || (ano1 % 4 == 0 && ano1 % 100 != 0))
+	{
+		duracao_do_mes[1] = 29;
+	}
+	else
+	{
+		duracao_do_mes[1] = 28;
+	}
+
+	/* validando valores de dia1 de acordo com duracao correta de meses */
+	if (dia1 > duracao_do_mes[mes1 - 1])
+	{
+		printf("Data invalida\n");
+		return 2;
+	}
+
+	/* ajustando valores para ano bissexto */
+	if (ano2 % 400 == 0 || (ano2 % 4 == 0 && ano2 % 100 != 0))
+	{
+		duracao_do_mes[1] = 29;
+	}
+	else
+	{
+		duracao_do_mes[1] = 28;
+	}
+
+	/* validando valores de dia2 de acordo com duracao correta de meses */
+	if (dia2 > duracao_do_mes[mes1 - 1])
+	{
+		printf("Data invalida\n");
+		return 2;
+	}
+
+	/* verificando por criterio ano */
+	if (ano1 < ano2)
+	{
+		printf("primeiro\n");
+		return 0;
+	}
+	else if (ano2 < ano1)
+	{
+		printf("segundo\n");
+		return 0;
+	}
+	
+	/* verificando por criterio mes */
+	if (mes1 < mes2)
+	{
+		printf("primeiro\n");
+		return 0;
+	}
+	else if (mes2 < mes1)
+	{
+		printf("segundo\n");
+		return 0;
+	}
+
+	/* verificando por criterio dia */
+	if (dia1 < dia2)
+	{
+		printf("primeiro\n");
+		return 0;
+	}
+	else if (dia2 < dia1)
+	{
+		printf("segundo\n");
+		return 0;
+	}
+	else
+	{
+		printf("mesmo dia\n");
+		return 0;
+	}
+}
+
+/*
+	Saidas:
+
+	Em caso de entrada valida:
+
+		Entre com duas datas (dd mm aaaa):
+		7 8 1988
+		6 8 1988
+		segundo
+		
+		Entre com duas datas (dd mm aaaa):
+		6 8 1988
+		7 8 1988
+		primeiro
+
+		Entre com duas datas (dd mm aaaa):
+		7 8 1988
+		7 8 1988
+		mesmo dia
+
+	Em caso de entrada invalida:
+
+		Entre com duas datas (dd mm aaaa):
+		foo   
+		Formato: dia mes ano
+
+		Entre com duas datas (dd mm aaaa):
+		29 2 1990
+		7 8 1988
+		Data invalida
+*/
+

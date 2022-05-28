@@ -1,0 +1,819 @@
+/*
+ * 	Programa: L04e01a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: O programa imprime um retangulo de asteriscos
+ * 	cujo numero de linhas e colunas e' pedido ao usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+	int linhas, colunas, match;
+	int c, i, j;
+
+	/* pedindo ao usuario entrada de numero de linhas */
+	do
+	{
+		printf("Entre com o número de linhas: ");
+		match = scanf("%d", &linhas);
+
+	}
+	while (match == 0 || linhas <= 0);
+
+	/* descartando caracteres extras */
+	c = getchar();
+	while(c != '\n') c = getchar();
+
+
+	/* pedindo ao usuario entrada de numero de colunas */
+	do
+	{
+		printf("Entre com o número de colunas: ");
+		match = scanf("%d", &colunas);
+	}
+	while (match == 0 || colunas <= 0);
+
+	/* desenhando retangulo */
+	for (i = 0; i < linhas; i++)
+	{
+		for (j = 0; j < colunas; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+Entre com o numero de linhas: 3
+Entre com o numero de colunas: 5
+*****
+*****
+*****
+
+*/
+
+/*
+ * 	Programa: L04e02a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: o programa imprime um triangulo reto na forma de asteriscos
+ * 	cuja altura e' pedida ao usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int altura, i, j, c;
+
+	/* Pedindo entrada do valor altura ao usuario */
+	do
+	{
+		printf("Entre com o numero de linhas da figura: ");
+		c = scanf("%d", &altura);
+	}
+	while (c == 0 || altura <= 0);
+
+	/* Imprimindo triangulo */
+	for (i = 0; i < altura; i++)
+	{
+		for (j = 0; j <= i; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero de linhas da figura: 4
+   *
+   **
+   ***
+   ****
+
+*/
+
+/*
+ * 	Programa: L04e03a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: Este programa imprime um triangulo reto invertido cuja altura
+ * 	e' dada pelo usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int altura, i, j, c;
+
+	/* pedindo ao usuario a entrada do numero de linhas da figura */
+	do
+	{
+		printf("Entre com o numero de linhas da figura: ");
+		c = scanf("%d", &altura);
+	}
+	while (c == 0 || altura <= 0);
+
+	/* imprimindo figura */
+	for (i = 0; i < altura; i++)
+	{
+		for (j = 0; j < altura - i; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero de linhas da figura: 5
+   *****
+   ****
+   ***
+   **
+   *
+
+*/
+
+/*
+ * 	Programa: L04e04a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 18/05/2022
+ * 	Descrição: Este programa mostra como podemos gerar numeros inteiros
+ * 	radomicos em um intervalo.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+int main (void)
+{
+	int i, n;
+	int max = 100;
+
+	/* srand inicializa o gerador de numeros randomicos
+	   ---- So precisa aparecer uma vez no inicio do programa.
+	   ---- time(NULL) retorna o numero de segundos que aconteceram desde
+	   01/01/1970
+	   ---- srand deve receber um inteiro para inicializar o gerador de numeros
+	   randomicos. Costuma-se usar o numero de segundos fornecidos por time(NULL).
+	*/
+	srand(time(NULL));
+
+	for (i = 0; i < 10; i++)
+	{
+		n = rand(); /* gera um numero inteiro entre 0 e RAND_MAX */
+		n = n % max; /* passa este numero para o intervalo 0 - max */
+		printf("%d\n", n);
+	}
+	return 0;
+}
+
+/* Saida
+
+95
+79
+99
+31
+35
+6
+11
+57
+27
+77
+
+*/
+
+/*
+ * 	Programa: L04e05a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 18/05/2022
+ * 	Descrição: O programa verifica se o gerador de numeros aleatorios tem
+ * 	vicios. Ele geera 1 000 000 numeros aleatorios entre 0 e RAND_MAX e calcula
+ * 	a frequencia de pares ou impares.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define ITERATIONS 1000000 
+
+int main (void)
+{
+	int i, randomNumber, pares = 0, impares = 0;
+	float porcentagem;
+
+	srand(time(NULL));
+
+	for (i = 0; i < ITERATIONS; i++)
+	{
+		randomNumber = rand();
+		(randomNumber % 2 == 0) ? pares++ : impares++;
+	}
+
+	porcentagem = ((float) pares / (float) ITERATIONS) * 100;
+	printf("Porcentagem de pares: %.2f%%\n", porcentagem);
+
+	porcentagem = ((float) impares / (float) ITERATIONS) * 100;
+	printf("Porcentagem de impares: %.2f%%\n", porcentagem);
+	return 0;
+}
+
+/* Saida
+
+Porcentagem de pares: 49.91%
+Porcentagem de impares: 50.09%
+
+*/
+
+/*
+ * 	Programa: L04e06a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/05/2022
+ * 	Descrição: Este programa cria um dado virtual e testa se e' justo ou
+ * 	tem alguma tendencia.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define ITERATIONS 6000000
+
+int main (void)
+{
+	int i, dado;
+	int lado[] = {0, 0, 0, 0, 0, 0};
+	float porcentagem[6];
+
+	srand(time(NULL));
+	for (i = 0; i < ITERATIONS; i++)
+	{
+		dado = rand() % 6;
+
+		/* esse switch e' desnecessario, so fiz dessa forma
+		   porque o enunciado exigia especificamente */
+		switch(dado)
+		{
+			case(0):
+				lado[dado]++;
+				break;
+				
+			case(1):
+				lado[dado]++;
+				break;
+				
+			case(2):
+				lado[dado]++;
+				break;
+
+			case(3):
+				lado[dado]++;
+				break;
+
+			case(4):
+				lado[dado]++;
+				break;
+
+			case(5):
+				lado[dado]++;
+				break;
+		}
+	}
+
+	for (i = 0; i < 6; i++)
+	{
+		porcentagem[i] = ((float) lado[i] / (float) ITERATIONS) * (float) 100;
+		printf("Frequencia do lado %d: %.2f\n", i + 1, porcentagem[i]);
+	}
+
+	return 0;
+}
+
+/* Saida
+
+Frequencia do lado 1: 16.63
+Frequencia do lado 2: 16.68
+Frequencia do lado 3: 16.66
+Frequencia do lado 4: 16.66
+Frequencia do lado 5: 16.67
+Frequencia do lado 6: 16.69
+
+*/
+
+/*
+ * 	Programa: L04e07a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/05/2022
+ * 	Descrição: Este programa usa um gerador de numeros aleatorios para calcular pi.
+ * 	Ele faz isso gerando pontos em um grafico bidimensional de numeros reais entre
+ * 	0 e 1, depois contando o numero de pontos para os quais x^2 + y^2 <= 1 .
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define ITERATIONS_MIN 1000000
+#define ITERATIONS_MAX 9999999
+
+int main (void)
+{
+	float ponto[2], x;
+	int i, dentro = 0;
+
+	srand(time(NULL));
+	for (i = 0; i < ITERATIONS_MIN; i++)
+	{
+		ponto[0] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+		ponto[1] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+
+		if (pow(ponto[0], 2) + pow(ponto[1], 2) <= 1.00) dentro++;
+	}
+
+	x = (4 * dentro) / (float) ITERATIONS_MIN;
+	printf("a) X = %f\n", x);
+
+	dentro = 0;
+	for (i = 0; i < ITERATIONS_MAX; i++)
+	{
+		ponto[0] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+		ponto[1] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+
+		if (pow(ponto[0], 2) + pow(ponto[1], 2) <= 1.00) dentro++;
+	}
+
+
+	x = (4 * dentro) / (float) ITERATIONS_MAX;
+	printf("b) X = %f\n", x);
+
+	return 0;
+}
+
+/* Saida
+
+a) X = 3.143132
+b) X = 3.141763
+
+*/
+
+/*
+ * 	Programa: L04e01b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: exercicio de re-escrever for loop usando while:
+ * 	o programa imprime os numeros de 1 a 4, exceto o numero 2
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int i = 0;
+	while (i <= 20)
+	{
+		i++;
+		if (i == 2) continue;
+		if (i == 5) break;
+		printf("i = %d\n", i);
+	}
+	return 0;
+}
+
+/* Saida
+
+   i = 1
+   i = 3
+   i = 4
+
+*/
+
+/*
+ * 	Programa: L04e02b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: Este programa le a idade de um numero indeterminado de pessoas e
+ * 	calcula o numero de pessoas, a idade media do grupo, a menor idade e a
+ * 	maior idade.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int i, match, numPessoas = 0, idadeMedia = 0, menorIdade, maiorIdade;
+
+	do
+	{
+		printf("Entre com o valor da idade: ");
+		match = scanf("%d", &i);
+		if (match == 0) continue;
+		if (i < 0) continue;
+		if (i == 0) break;
+		idadeMedia += i;
+		if (numPessoas == 0)
+		{
+			menorIdade = i;
+			maiorIdade = i;
+		}
+		menorIdade = (menorIdade > i) ? i : menorIdade;
+		maiorIdade = (maiorIdade < i) ? i : maiorIdade;
+		numPessoas++;
+	}
+	while (1);
+
+	idadeMedia /= numPessoas;
+
+	printf("Numero de pessoas: %d\n", numPessoas);
+	printf("Idade media do grupo: %d\n", idadeMedia);
+	printf("Menor idade: %d\n", menorIdade);
+	printf("Maior idade: %d\n", maiorIdade);
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o valor da idade: 10
+   Entre com o valor da idade: 20
+   Entre com o valor da idade: 40
+   Entre com o valor da idade: 0
+   Numero de pessoas: 3
+   Idade media do grupo: 23
+   Menor idade: 10
+   Maior idade: 40
+
+*/
+
+/*
+ * 	Programa: L04e03b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: Este programa le 3 notas e imprime a media. O programa termina
+ * 	quando o usuario inclui uma nota negativa.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	float media = 0.0, nota = 0.0;
+	int numNotas = 0, match, c;
+	while (numNotas < 3)
+	{
+		printf("Inserir nota: ");
+		match = scanf("%f", &nota);
+		if (nota < 0) return 1;
+		media += nota;
+		c = getchar();
+		while (c != '\n') c = getchar();
+		if (match == 0) continue;
+		numNotas++;
+	}
+
+	media /= numNotas;
+	printf("Media: %.2f\n", media);
+	return 0;
+}
+
+/* Saida
+
+   Inserir nota: 30
+   Inserir nota: 90
+   Inserir nota: 75
+   Media: 65.00
+
+*/
+
+/*
+ * 	Programa: L04e04b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/05/2022
+ * 	Descrição: O programa calcula o valor total a ser pago pelo cliente.
+ * 	O programa recebe um codigo para determinar o tipo de cliente e aplica
+ * 	descontos de acordo (10% para funcionarios e 5% para vips).
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	float item, subtotal = 0.00;
+	int match, codigoDoCliente, c = 0;
+
+	do
+	{
+		printf("Entre codigo do cliente: (1) para comum, (2) para funcionario ou (3) para VIP\n");
+		match = scanf("%d", &codigoDoCliente);
+	}
+	while (match == 0 || codigoDoCliente < 1 || codigoDoCliente > 3);
+	
+	c = getchar();
+	while (c != '\n') c = getchar();
+
+	do
+	{
+		printf("Entre valor do proximo item (entre 0 para encerrar): ");
+		match = scanf("%f", &item);
+		if (match == 0) continue;
+		if (item == 0) break;
+		subtotal += item;
+
+	}
+	while(1);
+
+	switch (codigoDoCliente)
+	{
+		case 1:
+			break;
+
+		case 2:
+			printf("Desconto de funcionario:\nValor original: %.2f\n", subtotal);
+			subtotal *= 0.9;
+			break;
+			
+		case 3:
+			printf("Desconto de VIP:\nValor original: %.2f\n", subtotal);
+			subtotal *= 0.95;
+			break;
+	}
+
+	printf("Valor a pagar: %.2f\n", subtotal);
+
+	return 0;
+}
+
+/* Saida
+
+Entre codigo do cliente: (1) para comum, (2) para funcionario ou (3) para VIP
+2
+Entre valor do proximo item (entre 0 para encerrar): 20.00
+Entre valor do proximo item (entre 0 para encerrar): 10.00
+Entre valor do proximo item (entre 0 para encerrar): 20.00
+Entre valor do proximo item (entre 0 para encerrar): 0
+Desconto de funcionario:
+Valor original: 50.00
+Valor a pagar: 45.00
+
+*/
+
+/*
+ * 	Programa: L04e05b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/05/2022
+ * 	Descrição: O programa imprime o nome do mes, de acordo com o numero
+ * 	digitado pelo usuario.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int mes, match;
+
+	do
+	{
+		printf("Entre com o numero do mes: ");
+		match = scanf("%d", &mes);
+	}
+	while (match == 0 || mes < 1 || mes > 12);
+
+	switch (mes)
+	{
+		case 1:
+			printf("Janeiro\n");
+			break;
+		case 2:
+			printf("Fevereiro\n");
+			break;
+		case 3:
+			printf("Marco\n");
+			break;
+		case 4:
+			printf("Abril\n");
+			break;
+		case 5:
+			printf("Maio\n");
+			break;
+		case 6:
+			printf("Junho\n");
+			break;
+		case 7:
+			printf("Julho\n");
+			break;
+		case 8:
+			printf("Agosto\n");
+			break;
+		case 9:
+			printf("Setembro\n");
+			break;
+		case 10:
+			printf("Outubro\n");
+			break;
+		case 11:
+			printf("Novembro\n");
+			break;
+		case 12:
+			printf("Dezembro\n");
+			break;
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero do mes: 8
+   Agosto
+
+*/
+
+/*
+ * 	Programa: L04e06b.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 17/02/2022
+ * 	Descrição: Programa de conversao de base numerica. Apresenta uma lista de opcoes
+ * 	1. decimal para hex
+ * 	2. hex para decimal
+ * 	3. decimal para octal
+ * 	4. octal para decimal
+ * 	5. encerra
+ *
+ * 	O programa pede um numero na base escolhida e apresenta-lo na base desejada.
+ * 	Em seguida, o programa pergunta ao usuario se ele deseja retornar ao menu
+ * 	principal ou finalizar o programa.
+ */
+
+#include <stdio.h>
+#include <math.h>
+
+int main (void)
+{
+	int start = 1, c, match, opcao;
+	long unsigned int entrada, mask;
+
+	do
+	{
+		if (!start)
+		{
+			c = getchar();
+			while (c != '\n') c = getchar();
+			start = 0;
+		}
+		
+		printf(
+				"<Conversao de base>\n1. decimal para hexadecimal\n2. hexadecimal para decimal\n3. decimal para octal\n4. octal para decimal\n5. encerra\nEntre a opcao desejada: "
+		      );
+		match = scanf("%d", &opcao);
+
+		if (match == 0)
+		{
+			c = getchar();
+			while (c != '\n') c = getchar();
+			continue;
+		}
+
+		if (opcao < 1 || opcao > 5) continue;
+
+		if (opcao == 5) break;
+
+		c = getchar();
+		while (c != '\n') c = getchar();
+
+		switch (opcao)
+		{
+			case 1:
+				do
+				{
+					printf("Decimal: ");
+					scanf("%lu", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Hexadecimal: %lx\n", entrada);
+				break;
+
+			case 2:
+				do
+				{
+					printf("Hexadecimal: ");
+					scanf("%lx", &entrada);
+				}
+				while (match == 0);
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Decimal: %lu\n", entrada);
+				break;
+
+			case 3:
+				do
+				{
+					printf("Decimal: ");
+					scanf("%lu", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Octal: %lo\n", entrada);
+				break;
+
+			case 4:
+				do
+				{
+					printf("Octal: ");
+					scanf("%lo", &entrada);
+				}
+				while (match == 0);
+
+				mask = entrada & 0x8000000000000000;
+				if (mask != 0x00)
+					printf("Atencao: transbordamento ou numero negativo representado em complementacao a 2\n");
+				printf("Decimal: %lu\n", entrada);
+				break;
+		}
+	}
+	while (1);
+
+	return 0;
+}
+
+/*
+
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 1
+Decimal: 20
+Hexadecimal: 14
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 2
+Hexadecimal: ff
+Decimal: 255
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 3
+Decimal: 10
+Octal: 12
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 4
+Octal: 88
+Decimal: 10
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 4
+Octal: 77
+Decimal: 63
+<Conversao de base>
+1. decimal para hexadecimal
+2. hexadecimal para decimal
+3. decimal para octal
+4. octal para decimal
+5. encerra
+Entre a opcao desejada: 5
+
+*/

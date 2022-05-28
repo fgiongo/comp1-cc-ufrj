@@ -1,0 +1,206 @@
+Computação 1
+Fernando Giongo Oliveira
+
+Questão 1.
+
+int A = 5;
+int B = 10;
+int C = -8;
+float D = 1.5;
+int L = 0;
+
+a) X = 2 * A % 3 - C
+	Resultado: X = 9
+
+	prioridade 2: * multiplicação
+		      % módulo
+	da esquerda para a direita, primeiro a multiplicação:
+	X = 2 * 5 % 3 - -8
+	= 10 % 3 - -8
+
+	depois, o módulo
+	X = 10 % 3 - -8
+	  = 1 - -8
+
+	prioridade 3: - subtração
+	X = 1 - -8
+	  = 9
+	
+	prioridade 13: = atribuição
+	X = 9
+
+b) X = (-2 * C) / 4
+	Resultado: X = 4
+
+	prioridade 0: () agrupamento
+	X = (-2 * -8) / 4
+	= (-2 * -8)
+
+		prioridade 2: * multiplicação
+		(-2 * -8)
+		= 16
+
+	prioridade 2: / divisão 
+	X = 16 / 4
+	= 4
+
+	prioridade 13: = atribuição
+	X = 4
+
+c) X = ((B / 3) / 3) + D * C / 2
+	Resultado: X = -5
+
+	prioridade 0: () agrupamento
+	X = ((10 / 3) / 3) + 1.5 * -8 / 2
+	= ((10 / 3) / 3)
+
+		prioridade 0: () agrupamento
+		((10 / 3) / 3)
+		= (10 / 3)
+
+			prioridade 2: / divisão
+			10 / 3
+			= 3
+
+	prioridade 2: / divisão
+	X = 3 / 3
+	= 1
+
+	prioridade 2: * multiplicação
+		      / divisão
+	da esquerda para a direita, primeiro a multiplicação:
+	X = 1 + 1.5 * -8 / 2
+	= 1 + -12.0 / 2
+
+	depois a divisão:
+	X = 1 + -12.0 / 2
+	= 1 + -6.0
+
+	prioridade 3: + soma
+	X = 1 + -6.0
+	= -5.0
+
+	prioridade 13: = atribuição
+	X = -5
+
+d) X = (-C * 2) + (D + B) / A
+	Resultado:
+	se X int, X = 18
+	se X float, X = 18.3
+
+	prioridade  0: () agrupamento
+	X = (- -8 * 2) + (1.5 + 10) / 5
+	
+	da esquerda para a direita, primeiro:
+	(- -8 * 2)
+	
+		prioridade 1: - unária aritmética
+		(- -8 * 2)
+		= (8 * 2)
+
+		prioridade 2: * multiplicação
+		(8 * 2)
+		= 16
+
+	depois:
+	(1.5 + 10)
+
+		prioridade 3: soma
+		X = (1.5 + 10)
+		X = 11.5
+
+	prioridade 2: / divisão
+	X = 16 + 11.5 / 5
+	X = 16 + 2.3
+
+	prioridade 3: + soma
+	X = 16 + 2.3
+	X = 18.3
+
+	prioridade 13: atribuição
+	X = 17.3
+	se X int, X = 17
+	se X float, X = 17.3
+
+e) X = A * C & (L | B)
+	Resultado: X = -38
+
+	prioridade 0: () agrupamento
+	X = 5 * -8 & (0 | 10)
+	= (0 | 10)
+
+		prioridade 9: | ou bit a bit
+		0 | 10
+		= 10
+
+	prioridade 2: * multiplicação
+	X = 5 * -8 & 10
+	= -40 & 10
+
+	prioridade 7: & e bit a bit
+	X = -40 & 10
+
+		representação de -40:
+
+		representação de 40 binário:
+		0000 0000 0010 1000
+
+		representação de -40 em complemento a 2:
+		1111 1111 1101 0111
+				 +1
+		-------------------
+		1111 1111 1101 1000
+
+		operação &:
+		1111 1111 1101 1000
+	      & 0000 0000 0000 1010
+		-------------------
+		1111 1111 1101 1010
+
+		complemento a 2 do resutado
+		1111 1111 1101 1010
+		0000 0000 0010 0101
+		                 +1
+		-------------------
+		0000 0000 0010 0110
+		= 32 + 4 + 2 = 38
+
+	= -38
+
+	prioridade 13: = atribuições
+	X = -38
+
+f) X = (! L + A < C | C + C * B >= 1 & 1)
+	Resultado: X = 0
+
+	prioridade 0: () agrupamento
+	X = (!0 + 5 < -8 | -8 + -8 * 10 >= 1 & 1)
+	= !0 + 5 < -8 | -8 + -8 * 10 >= 1 & 1
+
+		prioridade 1: ! unárias lógicas
+		!0 + 5 < -8 | -8 + -8 * 10 >= 1 & 1
+		= inteiro_positivo + 5 < -8 | -8 + -8 * 10 >= 1 & 1
+
+		prioridade 2: * multiplicação	
+		inteiro_positivo + 5 < -8 | -8 + -8 * 10 >= 1 & 1
+		= inteiro_positivo + 5 < -8 | -8 + -80 >= 1 & 1
+
+		prioridade 3: + soma
+		1 + 5 < -8 | -8 + -80 >= 1 & 1
+		= inteiro_positivo < -8 | -88 >= 1 & 1
+
+		prioridade 5: < operadores relacionais
+		              >=
+		inteiro_positivo < -8 | -88 >= 1 & 1
+		= 0 | 0 & 1
+
+		prioridade 7: & e bit a bit
+		0 | 0 & 1
+		= 0 | 0
+
+		prioridade 9: | ou bit a bit
+		0 | 0
+		= 0
+
+	prioridade 13: = atribuições	
+	X = 0

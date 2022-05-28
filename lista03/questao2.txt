@@ -1,0 +1,108 @@
+Computação 1
+Lista 03
+Questão 02
+
+a) ((10 > 5) || (5 > 10))
+	Resutado: TRUE
+
+	prioridade 0: () agrupamento
+	((10 > 5) || (5 > 10))
+	= (10 > 5) || (5 > 10)
+
+		prioridade 0: () agrupamento
+		da esquerda para a direita:
+		(10 > 5) || (5 > 10)
+		= 10 > 5
+		= TRUE
+
+		da esquerda para a direita:
+		TRUE || (5 > 10)
+		= (5 > 10)
+		= FALSE
+
+	= TRUE || FALSE
+	= TRUE
+
+b) (!(5 == 6) && (5 != 6) && ((2 > 1) || (5 <= 4)))
+	Resultado: TRUE
+
+	prioridade 0: () agrupamento
+	(!(5 == 6) && (5 != 6) && ((2 > 1) || (5 <= 4)))
+	= !(5 == 6) && (5 != 6) && ((2 > 1) || (5 <= 4))
+
+		prioridade 0: () agrupamento
+		!(5 == 6) && (5 != 6) && ((2 > 1) || (5 <= 4))
+
+			da esquerda para a direita:
+			5 == 6
+			= FALSE 
+	
+			da esquerda para a direita:
+			5 != 6
+			= TRUE
+	
+			da esquerda para a direita
+			(2 > 1) || (5 <= 4)
+	
+			prioridade 0: () agrupamento
+			(2 > 1) || (5 <= 4)
+	
+				prioridade 0: () agrupamento
+				(2 > 1) || (5 <= 4)
+
+				da esquerda para a direita:
+				2 > 1
+				= TRUE
+	
+				da esquerda para a direita:
+				5 <= 4
+				= FALSE
+	
+			= TRUE || FALSE
+			= TRUE
+
+		= !FALSE && TRUE && TRUE
+
+		prioridade 1: ! unárias lógicas
+		!FALSE && TRUE && TRUE
+		= TRUE && TRUE && TRUE
+
+		= TRUE
+	= TRUE
+
+c) (11 > 2) && (5 > 30)
+	Resultado: FALSE
+
+	prioridade 0: () agrupamento
+	(11 > 2) && (5 > 30)
+
+		da equerda para a direita:
+		11 > 2
+		= TRUE
+
+		da esquerda para a direita:
+		5 > 30
+		= FALSE
+
+	= TRUE && FALSE
+
+	= FALSE
+
+d) (11 > 2) || (3 > 30)
+	Resultado: TRUE
+
+	prioridade 0: () agrupamento
+	(11 > 2) || (3 > 30)
+
+		da esquerda para a direita:
+		11 > 2
+		= TRUE
+
+		da esquerda para a direita:
+		3 > 30
+		= FALSE
+
+	= TRUE || FALSE
+
+	= TRUE
+

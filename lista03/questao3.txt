@@ -1,0 +1,160 @@
+Computação 1
+Fernando Giongo
+Lista 3
+Questão 3
+
+a)
+linha   x       	y       z
+1       lixo    	lixo    lixo
+2       10      	10      lixo
+3       11      	10      lixo
+3       11      	10      11
+4       -11     	10      11
+5       -11     	11      11
+6       -11 + 11 - 11   11      11
+6       -11             11      10
+
+Saída:
+Valores de x -11, y 11 e z 10
+
+Questão 4
+
+a)
+x = 6.0
+y = 2
+z = 4.0
+a = 8
+b = 7.5
+c = 12
+
+a) x - y * ++a
+	Resultado: -12.0
+
+	prioridade 1: ++ unárias aritméticas
+	6.0 - 2 * ++8
+	= 6.0 - 2 * 9
+
+	prioridade 2: * multiplicação
+	6.0 - 2 * 9
+	= 6.0 - 18
+
+	prioridade 3: - subtração
+	6.0 - 18
+	= -12.0
+
+b) x - y * a > c % y
+	Resultado: FALSE
+
+	prioridade 2: * multiplicação
+	6.0 - 2 * 8 > 12 % 2
+	= 6.0 - 16 > 12 % 2
+
+	prioridade 2: % módulo
+	6.0 - 16 > 12 % 2
+	= 6.0 - 16 > 0
+
+	prioridade 3: - subtração
+	6.0 - 16 > 0
+	= -10.0 > 0
+
+	prioridade 5: > operador relacional
+	-10.0 > 0
+	= FALSE
+
+c) y != c
+	Resultado: TRUE
+
+d) c % y <= y % c
+	Resultado: TRUE
+
+	prioridade 2: % módulo
+	12 % 2 <= 2 % 12
+	= 0 <= 2 % 12
+	= 0 <= 2
+
+	prioridade 5: <= operador relacional
+	0 <= 2
+	= TRUE
+
+e) !(a > b)
+	Resultado: FALSE
+
+	prioridade 0: () agrupamento
+	!(8 > 7.5)
+	= 8 > 7.5
+
+		prioridade 5: > operador relacional
+		8 > 7.5
+		= TRUE
+
+	prioridade 1: ! unária lógica
+	!TRUE
+	= FALSE
+
+f) ((z / a) + b * --y)
+	Resultado: 8.0
+
+	prioridade 0: () agrupamento
+	((4.0 / 8) + 7.5 * --2)
+	= (4.0 / 8) + 7.5 * --2
+
+		prioridade 0: () agrupamento
+		(4.0 / 8) + 7.5 * --2
+
+			prioridade 2: / divisão
+			4.0 / 8
+			= 0.5
+
+		prioridade 1: -- unária aritmética
+		0.5 + 7.5 * --2
+		= 0.5 + 7.5 * 1
+
+		prioridade 2: * multiplicação
+		0.5 + 7.5 * 1
+		= 0.5 + 7.5
+
+		prioridade 3: + soma
+		0.5 + 7.5
+		= 8.0
+
+	= 8.0
+
+g) (c = 7) || (b < 2)
+	Resultado: FALSE
+
+	prioridade 0: () agrupamento
+	(c = 7) || (7.5 < 2)
+
+		prioridade 13: = atribuição
+		c = 7
+	
+	prioridade 0: () agrupameto
+	7 || (b < 2)
+
+		prioridade 5: < operador relacional
+		7.5 < 2
+		= FALSE
+
+	prioridade 11: || ou
+	7 || FALSE
+	= FALSE
+
+h) (c = 7) && (7.5 < 2)
+	Resultado: FALSE
+
+	prioridade 0: () agrupamento
+	(c = 7) && (7.5 < 2)
+
+		prioridade 13: = atribuição
+		c = 7
+	
+	prioridade 0: () agrupameto
+	7 && (b < 2)
+
+		prioridade 5: < operador relacional
+		7.5 < 2
+		= FALSE
+
+	prioridade 10: && e
+	7 && FALSE
+	= FALSE

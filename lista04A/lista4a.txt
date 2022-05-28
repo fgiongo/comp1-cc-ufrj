@@ -1,0 +1,374 @@
+/*
+ * 	Programa: L04e01a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: O programa imprime um retangulo de asteriscos
+ * 	cujo numero de linhas e colunas e' pedido ao usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	/* Aqui vao as declaracoes das variaveis */
+	int linhas, colunas, match;
+	int c, i, j;
+
+	/* pedindo ao usuario entrada de numero de linhas */
+	do
+	{
+		printf("Entre com o número de linhas: ");
+		match = scanf("%d", &linhas);
+
+	}
+	while (match == 0 || linhas <= 0);
+
+	/* descartando caracteres extras */
+	c = getchar();
+	while(c != '\n') c = getchar();
+
+
+	/* pedindo ao usuario entrada de numero de colunas */
+	do
+	{
+		printf("Entre com o número de colunas: ");
+		match = scanf("%d", &colunas);
+	}
+	while (match == 0 || colunas <= 0);
+
+	/* desenhando retangulo */
+	for (i = 0; i < linhas; i++)
+	{
+		for (j = 0; j < colunas; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+Entre com o numero de linhas: 3
+Entre com o numero de colunas: 5
+*****
+*****
+*****
+
+*/
+
+/*
+ * 	Programa: L04e02a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: o programa imprime um triangulo reto na forma de asteriscos
+ * 	cuja altura e' pedida ao usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int altura, i, j, c;
+
+	/* Pedindo entrada do valor altura ao usuario */
+	do
+	{
+		printf("Entre com o numero de linhas da figura: ");
+		c = scanf("%d", &altura);
+	}
+	while (c == 0 || altura <= 0);
+
+	/* Imprimindo triangulo */
+	for (i = 0; i < altura; i++)
+	{
+		for (j = 0; j <= i; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero de linhas da figura: 4
+   *
+   **
+   ***
+   ****
+
+*/
+
+/*
+ * 	Programa: L04e03a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/05/2022
+ * 	Descrição: Este programa imprime um triangulo reto invertido cuja altura
+ * 	e' dada pelo usuario
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+	int altura, i, j, c;
+
+	/* pedindo ao usuario a entrada do numero de linhas da figura */
+	do
+	{
+		printf("Entre com o numero de linhas da figura: ");
+		c = scanf("%d", &altura);
+	}
+	while (c == 0 || altura <= 0);
+
+	/* imprimindo figura */
+	for (i = 0; i < altura; i++)
+	{
+		for (j = 0; j < altura - i; j++)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+/* Saida
+
+   Entre com o numero de linhas da figura: 5
+   *****
+   ****
+   ***
+   **
+   *
+
+*/
+
+/*
+ * 	Programa: L04e04a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 18/05/2022
+ * 	Descrição: Este programa mostra como podemos gerar numeros inteiros
+ * 	radomicos em um intervalo.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+int main (void)
+{
+	int i, n;
+	int max = 100;
+
+	/* srand inicializa o gerador de numeros randomicos
+	   ---- So precisa aparecer uma vez no inicio do programa.
+	   ---- time(NULL) retorna o numero de segundos que aconteceram desde
+	   01/01/1970
+	   ---- srand deve receber um inteiro para inicializar o gerador de numeros
+	   randomicos. Costuma-se usar o numero de segundos fornecidos por time(NULL).
+	*/
+	srand(time(NULL));
+
+	for (i = 0; i < 10; i++)
+	{
+		n = rand(); /* gera um numero inteiro entre 0 e RAND_MAX */
+		n = n % max; /* passa este numero para o intervalo 0 - max */
+		printf("%d\n", n);
+	}
+	return 0;
+}
+
+/* Saida
+
+95
+79
+99
+31
+35
+6
+11
+57
+27
+77
+
+*/
+
+/*
+ * 	Programa: L04e05a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 18/05/2022
+ * 	Descrição: O programa verifica se o gerador de numeros aleatorios tem
+ * 	vicios. Ele geera 1 000 000 numeros aleatorios entre 0 e RAND_MAX e calcula
+ * 	a frequencia de pares ou impares.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define ITERATIONS 1000000 
+
+int main (void)
+{
+	int i, randomNumber, pares = 0, impares = 0;
+	float porcentagem;
+
+	srand(time(NULL));
+
+	for (i = 0; i < ITERATIONS; i++)
+	{
+		randomNumber = rand();
+		(randomNumber % 2 == 0) ? pares++ : impares++;
+	}
+
+	porcentagem = ((float) pares / (float) ITERATIONS) * 100;
+	printf("Porcentagem de pares: %.2f%%\n", porcentagem);
+
+	porcentagem = ((float) impares / (float) ITERATIONS) * 100;
+	printf("Porcentagem de impares: %.2f%%\n", porcentagem);
+	return 0;
+}
+
+/* Saida
+
+Porcentagem de pares: 49.91%
+Porcentagem de impares: 50.09%
+
+*/
+
+/*
+ * 	Programa: L04e06a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/05/2022
+ * 	Descrição: Este programa cria um dado virtual e testa se e' justo ou
+ * 	tem alguma tendencia.
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define ITERATIONS 6000000
+
+int main (void)
+{
+	int i, dado;
+	int lado[] = {0, 0, 0, 0, 0, 0};
+	float porcentagem[6];
+
+	srand(time(NULL));
+	for (i = 0; i < ITERATIONS; i++)
+	{
+		dado = rand() % 6;
+		switch(dado)
+		{
+			case(0):
+				lado[dado]++;
+				break;
+				
+			case(1):
+				lado[dado]++;
+				break;
+				
+			case(2):
+				lado[dado]++;
+				break;
+
+			case(3):
+				lado[dado]++;
+				break;
+
+			case(4):
+				lado[dado]++;
+				break;
+
+			case(5):
+				lado[dado]++;
+				break;
+		}
+	}
+
+	for (i = 0; i < 6; i++)
+	{
+		porcentagem[i] = ((float) lado[i] / (float) ITERATIONS) * (float) 100;
+		printf("Frequencia do lado %d: %.2f\n", i + 1, porcentagem[i]);
+	}
+
+	return 0;
+}
+
+/* Saida
+
+Frequencia do lado 1: 16.63
+Frequencia do lado 2: 16.68
+Frequencia do lado 3: 16.66
+Frequencia do lado 4: 16.66
+Frequencia do lado 5: 16.67
+Frequencia do lado 6: 16.69
+
+*/
+
+/*
+ * 	Programa: L04e07a.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/05/2022
+ * 	Descrição: Este programa usa um gerador de numeros aleatorios para calcular pi.
+ * 	Ele faz isso gerando pontos em um grafico bidimensional de numeros reais entre
+ * 	0 e 1, depois contando o numero de pontos para os quais x^2 + y^2 <= 1 .
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define ITERATIONS_MIN 1000000
+#define ITERATIONS_MAX 9999999
+
+int main (void)
+{
+	float ponto[2], x;
+	int i, dentro = 0;
+
+	srand(time(NULL));
+	for (i = 0; i < ITERATIONS_MIN; i++)
+	{
+		ponto[0] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+		ponto[1] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+
+		if (pow(ponto[0], 2) + pow(ponto[1], 2) <= 1.00) dentro++;
+	}
+
+	x = (4 * dentro) / (float) ITERATIONS_MIN;
+	printf("a) X = %f\n", x);
+
+	dentro = 0;
+	for (i = 0; i < ITERATIONS_MAX; i++)
+	{
+		ponto[0] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+		ponto[1] = (rand() % ITERATIONS_MIN + 1) / (float) ITERATIONS_MIN; 
+
+		if (pow(ponto[0], 2) + pow(ponto[1], 2) <= 1.00) dentro++;
+	}
+
+
+	x = (4 * dentro) / (float) ITERATIONS_MAX;
+	printf("b) X = %f\n", x);
+
+	return 0;
+}
+
+/* Saida
+
+a) X = 3.143132
+b) X = 3.141763
+
+*/
+
