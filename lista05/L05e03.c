@@ -18,7 +18,7 @@ void print_menu(void);
 int array_greatest(int *arr, int dim);
 int array_lowest(int *arr, int dim);
 int array_sum(int *arr, int dim);
-int array_pairs_amt(int *arr, int dim);
+int array_even_nums_amt(int *arr, int dim);
 int array_search(int query, int *arr, int dim);
 
 int main (void)
@@ -42,7 +42,7 @@ int main (void)
             break;
 
         case 'c':
-            printf("%d\n", array_pairs_amt(valores, DIM));
+            printf("%d\n", array_even_nums_amt(valores, DIM));
             break;
 
         case 'd':
@@ -113,13 +113,13 @@ int array_lowest(int *arr, int dim)
     return lowest;
 }
 
-int array_pairs_amt(int *arr, int dim)
+int array_even_nums_amt(int *arr, int dim)
 {
-    int i, pairs;
-    for (i = 0, pairs = 0; i < dim; i++)
-        if (arr[i] % 2 == 0) pairs++;
+    int i, even_nums;
+    for (i = 0, even_nums = 0; i < dim; i++)
+        if (arr[i] % 2 == 0) even_nums++;
 
-    return pairs;
+    return even_nums;
 }
 
 int array_sum(int *arr, int dim)
