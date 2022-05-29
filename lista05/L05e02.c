@@ -45,3 +45,19 @@ int main (void)
     }
     return 0;
 }
+
+/* Saida
+
+Matriz 1 (2 x 3):
+Inserir 3 valores(separados por espaco) para linha 1: 1 2 3
+Inserir 3 valores(separados por espaco) para linha 2: 4 5 6
+Matriz 2 (2 x 3):
+Inserir 3 valores(separados por espaco) para linha 1: 7 8 9
+Inserir 3 valores(separados por espaco) para linha 2: 10 11 12
+
+Matriz soma de Matriz 1 e Matriz 2
+008 010 012
+014 016 018
+
+*/
+
