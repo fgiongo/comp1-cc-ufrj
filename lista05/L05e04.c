@@ -20,19 +20,19 @@ int main (void)
 {
     int matriz[3][LINES][COLS];
 
-    matrix_input(&matriz[0][0][0], 5, 5);
+    matrix_input(&matriz[0][0][0], LINES, COLS);
     printf("\n");
-    matrix_input(&matriz[1][0][0], 5, 5);
+    matrix_input(&matriz[1][0][0], LINES, COLS);
     
-    matrix_mult(5, 5, &matriz[0][0][0], 5, 5, &matriz[1][0][0],
+    matrix_mult(LINES, COLS, &matriz[0][0][0], LINES, COLS, &matriz[1][0][0],
                 &matriz[2][0][0]);
 
     printf("\n");
-    matrix_print(&matriz[0][0][0], 5, 5);
+    matrix_print(&matriz[0][0][0], LINES, COLS);
     printf("\n");
-    matrix_print(&matriz[1][0][0], 5, 5);
+    matrix_print(&matriz[1][0][0], LINES, COLS);
     printf("\n");
-    matrix_print(&matriz[2][0][0], 5, 5);
+    matrix_print(&matriz[2][0][0], LINES, COLS);
 
     return 0;
 }
