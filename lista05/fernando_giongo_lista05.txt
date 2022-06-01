@@ -1,0 +1,1255 @@
+/* Nome do arquivo: L05e01.c
+ * Data: 28/05/2022
+ * Autor: Fernando Giongo
+ * Descricao: Este programa le duas strings do teclado e faz:
+ * (a) mostra as strings invertidas;
+ * (b) copia / concatena as strings em outro vetor, imprimindo a resposta;
+ * (c) compara duas strings e informa qual e' a maior;
+ * (d) informa a string de maior tamanho;
+ * (e) identifica a ocorrencia de determinado caractere na string e informa
+ *     a sua posicao
+ */
+
+#include <stdio.h>
+
+#define STR_MAX 1000000 * sizeof(char)
+
+void print_menu(void);
+void get_string(char *string, long size);
+void print_inverted_string(char *string);
+int string_length(char *string);
+void string_cat(char *string_a, char *string_b, char *string_dest);
+int string_subtract(char *string_a, char *string_b);
+int string_char_position(char *string, char c);
+
+int main (void)
+{
+    char strings[3][STR_MAX];
+    char opcao; 
+
+    printf("Entre com a primeira string:\n");
+    get_string(strings[0], STR_MAX);
+
+    printf("\nEntre com a segunda string:\n");
+    get_string(strings[1], STR_MAX);
+
+    print_menu();
+    scanf("%c", &opcao);
+
+    switch (opcao)
+    {
+        case 'a':
+            print_inverted_string(strings[0]);
+            printf("\n");
+            print_inverted_string(strings[1]);
+            printf("\n");
+            break;
+            
+        case 'b':
+            string_cat(strings[0], strings[1], strings[2]);
+            printf("%s\n", strings[2]);
+            break;
+
+        case 'c':
+            if (string_length(strings[0]) > string_length(strings[1]))
+                printf("Primeira string e' mais longa\n");
+
+            else if (string_length(strings[0]) < string_length(strings[1]))
+                printf("Segunda string e' mais longa\n");
+
+            else
+                printf("Strings tem a mesma dimensao\n");
+
+            break;
+
+        case 'd':
+            if (string_subtract(strings[0], strings[1]) > 0)
+                printf("Primeira string tem maior valor\n");
+            else if (string_subtract(strings[0], strings[1]) < 0)
+                printf("Segunda string tem maior valor\n");
+            else
+                printf("Strings tem o mesmo valor\n");
+            break;
+            
+        case 'e':
+            getchar();
+            printf("Insira o caractere desejado: ");
+            scanf("%c", &opcao);
+            if (string_char_position(strings[0], opcao) == 0)
+                printf("Caractere nao encontrado na primeira string\n");
+            else
+                printf("Primeira string: caractere na posicao %d\n",
+                        string_char_position(strings[0], opcao));
+
+            if (string_char_position(strings[1], opcao) == 0)
+                printf("Caractere nao encontrado na segunda string\n");
+            else
+                printf("Segunda string: caractere na posicao %d\n",
+                        string_char_position(strings[1], opcao));
+            break;
+
+        default:
+            printf("Opcao invalida\n");
+            return 1;
+    }
+
+    return 0;
+}
+
+void print_menu(void)
+{
+    char *titulo = "Menu Principal\n";
+    char *a = "(a) Inverter strings\n";
+    char *b = "(b) Concatenar strings\n";
+    char *c = "(c) Comparar dimensao de strings\n";
+    char *d = "(d) Informar string de maior valor ASCII\n";
+    char *e = "(e) Identificar posicao de caractere nas strings\n";
+    char *enunc = "Selecione a opcao desejada: ";
+    printf("\n%s%s%s%s%s%s%s", titulo, a, b, c, d, e, enunc);
+}
+
+void get_string(char *string, long size)
+{
+    int c, i = 0;
+    do
+    {
+        c = getchar();
+        
+        if (c == '\n' || c == '\r' || c == EOF)
+        {
+            string[i] = '\0'; 
+            break;
+        }
+
+        if (i >= size - 2)
+        {
+            string[i] = '\0'; 
+            break;
+        }
+
+        string[i] = c;
+        i++;
+    }
+    while(1);
+}
+
+void print_inverted_string(char *string)
+{
+    int i, length = string_length(string);
+    
+    for (i = length - 1; i >= 0; i--)
+        putchar(string[i]);
+}
+
+int string_length(char *string)
+{
+    int i;
+
+    for (i = 0; ; i++)
+        if (string[i] == '\0') return i;
+
+    return 0;
+}
+
+void string_cat(char *string_a, char *string_b, char *string_dest)
+{
+    int i, j;
+
+    for (i = 0; string_a[i] != '\0'; i++)
+        string_dest[i] = string_a[i];
+
+    for (j = 0; string_b[j] != '\0'; j++, i++)
+        string_dest[i] = string_b[j];
+
+    string_dest[i] = '\0';
+}
+
+int string_subtract(char *string_a, char *string_b)
+{
+    int i, sum = 0;
+
+    for (i = 0; string_a[i] != '\0'; i++)
+            sum += string_a[i];
+
+    for (i = 0; string_b[i] != '\0'; i++)
+            sum -= string_b[i];
+
+    return sum;
+}
+
+int string_char_position(char *string, char c)
+{
+    int i;
+
+    for (i = 0; string[i] != '\0'; i++)
+        if (string[i] == c) return ++i;
+
+    return 0;
+}
+
+/* Saidas
+
+Entre com a primeira string:
+Esta string sera invertida
+
+Entre com a segunda string:
+e esta aqui tambem
+
+Menu Principal
+(a) Inverter strings
+(b) Concatenar strings
+(c) Comparar dimensao de strings
+(d) Informar string de maior valor ASCII
+(e) Identificar posicao de caractere nas strings
+Selecione a opcao desejada: a
+aditrevni ares gnirts atsE
+mebmat iuqa atse e
+
+***************************************************
+
+Entre com a primeira string:
+Esta primeira string esta imcompleta, ela prec
+
+Entre com a segunda string:
+isa ser concatenada com esta segunda.                   
+
+Menu Principal
+(a) Inverter strings
+(b) Concatenar strings
+(c) Comparar dimensao de strings
+(d) Informar string de maior valor ASCII
+(e) Identificar posicao de caractere nas strings
+Selecione a opcao desejada: b
+Esta primeira string esta imcompleta, ela precisa ser concatenada com esta segunda.
+
+*****************************************************
+Entre com a primeira string:
+Esta e' uma pequena string.
+
+Entre com a segunda string:
+Esta segunda string e' consideravelmente maior do que a primeira.
+
+Menu Principal
+(a) Inverter strings
+(b) Concatenar strings
+(c) Comparar dimensao de strings
+(d) Informar string de maior valor ASCII
+(e) Identificar posicao de caractere nas strings
+Selecione a opcao desejada: c
+Segunda string e' mais longa
+
+*******************************************************************************
+
+Entre com a primeira string:
+Esta e' uma pequena string.
+
+Entre com a segunda string:
+Esta segunda string e' consideravelmente maior do que a primeira. 
+
+Menu Principal
+(a) Inverter strings
+(b) Concatenar strings
+(c) Comparar dimensao de strings
+(d) Informar string de maior valor ASCII
+(e) Identificar posicao de caractere nas strings
+Selecione a opcao desejada: d
+Segunda string tem maior valor
+
+*******************************************************************************
+
+Entre com a primeira string:
+O 'X' nessa string esta logo no inicio.
+
+Entre com a segunda string:
+Na segunda string contudo, o caractere 'X' mais pro final.
+
+Menu Principal
+(a) Inverter strings
+(b) Concatenar strings
+(c) Comparar dimensao de strings
+(d) Informar string de maior valor ASCII
+(e) Identificar posicao de caractere nas strings
+Selecione a opcao desejada: e
+Insira o caractere desejado: X
+Primeira string: caractere na posicao 4
+Segunda string: caractere na posicao 41
+
+*/
+
+/* Nome do arquivo: L05e02.c
+ * Data: 28/05/2022
+ * Autor: Fernando Giongo
+ * Descricao: Este programa le duas matrizes 2 x 3 de numeros inteiros e
+ * imprime a sua soma.
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+    int matriz[3][2][3], i, j, k;
+
+    for (i = 0; i < 2; i++)
+    {
+        printf("Matriz %d (2 x 3):\n", i + 1);
+        for (j = 0; j < 2; j++)
+        {
+            printf("Inserir 3 valores(separados por espaco) para linha %d: ",
+                    j + 1);
+            scanf("%d %d %d", &matriz[i][j][0], &matriz[i][j][1],
+                    &matriz[i][j][2]);
+        }
+    }
+
+    /* removendo o lixo */
+    for (i = 0; i < 2; i++)
+        for (j = 0; j < 2; j++)
+            for (k = 0; k < 3; k++)
+                matriz[2][j][k] = 0;
+    
+    /* executando a soma */
+    for (i = 0; i < 2; i++)
+        for (j = 0; j < 2; j++)
+            for (k = 0; k < 3; k++)
+                matriz[2][j][k] += matriz[i][j][k];
+
+    printf("\nMatriz soma de Matriz 1 e Matriz 2\n");
+    for (i = 0; i < 2; i++)
+    {
+        for (j = 0; j < 3; j++)
+            printf("%03d ", matriz[2][i][j]);
+
+        printf("\n");
+    }
+    return 0;
+}
+
+/* Saida
+
+Matriz 1 (2 x 3):
+Inserir 3 valores(separados por espaco) para linha 1: 1 2 3
+Inserir 3 valores(separados por espaco) para linha 2: 4 5 6
+Matriz 2 (2 x 3):
+Inserir 3 valores(separados por espaco) para linha 1: 7 8 9
+Inserir 3 valores(separados por espaco) para linha 2: 10 11 12
+
+Matriz soma de Matriz 1 e Matriz 2
+008 010 012
+014 016 018
+
+*/
+
+/* Nome do arquivo: L05e03.c
+ * Data: 28/05/2022
+ * Autor: Fernando Giongo
+ * Descricao: Este programa le uma sequencia de 10 numeros inteiros e informa:
+ * (a) o maior valor da lista
+ * (b) o menor valor da lista
+ * (c) quantos valores sao pares
+ * (d) a soma de todos os valores
+ * (e) ao usuario se um determinado valor esta no vetor ou nao
+ */
+
+#include <stdio.h>
+
+#define DIM 10
+
+void fill_array(int *array, int size);
+void print_menu(void);
+int array_greatest(int *arr, int dim);
+int array_lowest(int *arr, int dim);
+int array_sum(int *arr, int dim);
+int array_even_nums_amt(int *arr, int dim);
+int array_search(int query, int *arr, int dim);
+
+int main (void)
+{
+    int valores[DIM], query;
+    char opcao;
+
+    fill_array(valores, DIM);
+    print_menu();
+    getchar();
+    scanf("%c", &opcao);
+
+    switch (opcao)
+    {
+        case 'a':
+            printf("%d\n", array_greatest(valores, DIM));
+            break;
+
+        case 'b':
+            printf("%d\n", array_lowest(valores, DIM));
+            break;
+
+        case 'c':
+            printf("%d\n", array_even_nums_amt(valores, DIM));
+            break;
+
+        case 'd':
+            printf("%d\n", array_sum(valores, DIM));
+            break;
+
+        case 'e':
+            getchar();
+            printf("Qual valor deseja buscar? ");
+            scanf("%d", &query);
+            if (array_search(query, valores, DIM) == 0)
+                printf("Valor nao encontrado.\n");
+            else
+                printf("Valor %d encontrado na posicao %d\n",
+                        query, array_search(query, valores, DIM));
+            break;
+
+        default:
+            printf("Opcao invalida\n");
+            return 1;
+    }
+
+    return 0;
+}
+
+void fill_array(int *array, int size)
+{
+    int i, match;
+    for (i = 0; i < size; i++)
+    {
+        printf("Entre valor no. %d: ", i + 1);
+        do
+        {
+            match = scanf("%d", &array[i]);
+        }
+        while (match == 0);
+    }
+}
+
+void print_menu(void)
+{
+    char *title = "\nMenu Principal\n";
+    char *a = "(a) exibir maior valor da lista\n";
+    char *b = "(b) exibir menor valor da lista\n";
+    char *c = "(c) exibir numero de valores pares\n";
+    char *d = "(d) exibir soma de todos os valores\n";
+    char *e = "(e) buscar valor na lista\n";
+    char *enunc = "\nSelecione uma opcao: ";
+    printf("%s%s%s%s%s%s%s", title, a, b, c, d, e, enunc);
+}
+
+
+int array_greatest(int *arr, int dim)
+{
+    int i, greatest;
+    for (i = 0, greatest = 0; i < dim; i++)
+        if (arr[i] > greatest) greatest = arr[i];
+
+    return greatest;
+}
+
+int array_lowest(int *arr, int dim)
+{
+    int i, lowest;
+    for (i = 0, lowest = arr[0]; i < dim; i++)
+        if (arr[i] < lowest) lowest = arr[i];
+
+    return lowest;
+}
+
+int array_even_nums_amt(int *arr, int dim)
+{
+    int i, even_nums;
+    for (i = 0, even_nums = 0; i < dim; i++)
+        if (arr[i] % 2 == 0) even_nums++;
+
+    return even_nums;
+}
+
+int array_sum(int *arr, int dim)
+{
+    int i, sum;
+    for (i = 0, sum = 0; i < dim; i++)
+        sum += arr[i];
+
+    return sum;
+}
+
+int array_search(int query, int *arr, int dim)
+{
+    int i;
+    for (i = 0; i < dim; i++)
+        if (arr[i] == query) return i + 1;
+
+    return 0;
+}
+
+/* Saida
+
+Entre valor no. 1: 45
+Entre valor no. 2: 234
+Entre valor no. 3: 567
+Entre valor no. 4: 23
+Entre valor no. 5: 76
+Entre valor no. 6: 123
+Entre valor no. 7: 7631
+Entre valor no. 8: 76
+Entre valor no. 9: 42
+Entre valor no. 10: 1352
+
+Menu Principal
+(a) exibir maior valor da lista
+(b) exibir menor valor da lista
+(c) exibir numero de valores pares
+(d) exibir soma de todos os valores
+(e) buscar valor na lista
+
+Selecione uma opcao: a
+7631
+
+*******************************************************************************
+
+Entre valor no. 1: 123
+Entre valor no. 2: 5
+Entre valor no. 3: 3476
+Entre valor no. 4: 23435
+Entre valor no. 5: 37567
+Entre valor no. 6: 34
+Entre valor no. 7: 7
+Entre valor no. 8: 324  
+Entre valor no. 9: 7537
+Entre valor no. 10: 2371
+
+Menu Principal
+(a) exibir maior valor da lista
+(b) exibir menor valor da lista
+(c) exibir numero de valores pares
+(d) exibir soma de todos os valores
+(e) buscar valor na lista
+
+Selecione uma opcao: b
+5
+
+*******************************************************************************
+
+Entre valor no. 1: 1
+Entre valor no. 2: 2
+Entre valor no. 3: 3
+Entre valor no. 4: 4
+Entre valor no. 5: 5
+Entre valor no. 6: 6
+Entre valor no. 7: 7
+Entre valor no. 8: 8
+Entre valor no. 9: 9
+Entre valor no. 10: 10
+
+Menu Principal
+(a) exibir maior valor da lista
+(b) exibir menor valor da lista
+(c) exibir numero de valores pares
+(d) exibir soma de todos os valores
+(e) buscar valor na lista
+
+Selecione uma opcao: c
+5
+
+*******************************************************************************
+
+Entre valor no. 1: 1
+Entre valor no. 2: 2
+Entre valor no. 3: 3
+Entre valor no. 4: 4
+Entre valor no. 5: 5
+Entre valor no. 6: 6
+Entre valor no. 7: 7
+Entre valor no. 8: 8
+Entre valor no. 9: 9
+Entre valor no. 10: 10
+
+Menu Principal
+(a) exibir maior valor da lista
+(b) exibir menor valor da lista
+(c) exibir numero de valores pares
+(d) exibir soma de todos os valores
+(e) buscar valor na lista
+
+Selecione uma opcao: d
+55
+
+*******************************************************************************
+
+Entre valor no. 1: 7854
+Entre valor no. 2: 234
+Entre valor no. 3: 8754
+Entre valor no. 4: 248
+Entre valor no. 5: 85
+Entre valor no. 6: 2548
+Entre valor no. 7: 2
+Entre valor no. 8: 4578
+Entre valor no. 9: 8537
+Entre valor no. 10: 1000
+
+Menu Principal
+(a) exibir maior valor da lista
+(b) exibir menor valor da lista
+(c) exibir numero de valores pares
+(d) exibir soma de todos os valores
+(e) buscar valor na lista
+
+Selecione uma opcao: e
+Qual valor deseja buscar? 2548
+Valor 2548 encontrado na posicao 6
+
+*/
+
+/* Nome do arquivo: L05e04.c
+ * Data: 29/05/2022
+ * Autor: Fernando Giongo
+ * Descricao: Este programa le duas matrizes 5 x 5 de numeros inteiros, as
+ * multiplica e imprime o resultado.
+ */
+
+#include <stdio.h>
+#define LINES 5
+#define COLS 5
+
+void matrix_input(int *matrix, int line, int col);
+void input_flush(void);
+int matrix_mult(int a_lines, int a_columns, int *factor_a, 
+                int b_lines, int b_columns,int *factor_b,
+                int *product);
+void matrix_print(int *matrix, int line, int col);
+
+int main (void)
+{
+    int matriz[3][LINES][COLS];
+
+    matrix_input(&matriz[0][0][0], LINES, COLS);
+    printf("\n");
+    matrix_input(&matriz[1][0][0], LINES, COLS);
+    
+    matrix_mult(LINES, COLS, &matriz[0][0][0], LINES, COLS, &matriz[1][0][0],
+                &matriz[2][0][0]);
+
+    printf("\n");
+    matrix_print(&matriz[0][0][0], LINES, COLS);
+    printf("\n");
+    matrix_print(&matriz[1][0][0], LINES, COLS);
+    printf("\n");
+    matrix_print(&matriz[2][0][0], LINES, COLS);
+
+    return 0;
+}
+
+void matrix_input(int *matrix, int line, int col)
+{
+    int i, j;
+
+    printf("Entrada de dados: Matriz %d x %d\n", line, col);
+    for (i = 0; i < line; i++)
+    {
+        printf("Inserir %d valores(separados por espaco) para linha %d:\n",
+                col, i + 1);
+        for (j = 0; j < col; j++)
+        {
+            scanf("%d", matrix + i * col + j);
+        }
+    input_flush();
+    }
+}
+
+void input_flush(void)
+{
+    int c;
+    c = getchar();
+    while (c != '\n' && c != '\r' && c != EOF) c = getchar();
+}
+
+int matrix_mult(int a_lines, int a_columns, int *factor_a, 
+                int b_lines, int b_columns,int *factor_b,
+                int *product)
+{
+    int i, j, k;
+
+    if (a_columns != b_lines)
+        return 1;
+
+    for (i = 0; i < a_lines; i++)
+    {
+        for (j = 0; j < b_columns; j++)
+        {
+            *(product + b_columns * i + j)  = 0;
+            for (k = 0; k < a_columns; k++)
+            {
+                *(product + b_columns * i + j)
+                    += *(factor_a + a_columns * i + k)
+                    * *(factor_b + b_columns * k + j);
+            }
+        }
+    }
+
+
+    return 0;
+}
+
+void matrix_print(int *matrix, int line, int col)
+{
+    int i, j;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < col; j++)
+            printf("%8d ", *(matrix + i * col + j)); 
+
+        printf("\n");
+    }
+}
+
+/* Saida
+
+Entrada de dados: Matriz 5 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+Inserir 5 valores(separados por espaco) para linha 2:
+6 7 8 9 10
+Inserir 5 valores(separados por espaco) para linha 3:
+11 12 13 14 15
+Inserir 5 valores(separados por espaco) para linha 4:
+16 17 18 19 20
+Inserir 5 valores(separados por espaco) para linha 5:
+21 22 23 24 25
+
+Entrada de dados: Matriz 5 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+26 27 28 29 30
+Inserir 5 valores(separados por espaco) para linha 2:
+31 32 33 34 35   
+Inserir 5 valores(separados por espaco) para linha 3:
+36 37 38 39 40 41
+Inserir 5 valores(separados por espaco) para linha 4:
+41 42 43 44 45
+Inserir 5 valores(separados por espaco) para linha 5:
+46 47 48 49 50
+
+       1        2        3        4        5 
+       6        7        8        9       10 
+      11       12       13       14       15 
+      16       17       18       19       20 
+      21       22       23       24       25 
+
+      26       27       28       29       30 
+      31       32       33       34       35 
+      36       37       38       39       40 
+      41       42       43       44       45 
+      46       47       48       49       50 
+
+     590      605      620      635      650 
+    1490     1530     1570     1610     1650 
+    2390     2455     2520     2585     2650 
+    3290     3380     3470     3560     3650 
+    4190     4305     4420     4535     4650 
+
+*/
+
+/* Nome do arquivo: L05e05.c
+ * Data: 29/05/2022
+ * Autor: Fernando Giongo
+ * Descricao: Este programa le dois vetores X e Y de 5 elementos e
+ * calcula os vetores resultantes das seguintes operacoes:
+ * (a) soma de cada elemento de X com o elemento da mesma posicao em Y
+ * (b) multiplicacao de cada elemento de X com o elemento da mesma posicao em Y
+ * (c) todos os elementos de X que nao existam em Y
+ * (d) apenas os elementos que aparecem nos dois vetores
+ * (e) todos os elementos de X e todos os elementos de Y que nao estao em X
+ * 
+ * obs.: assume-se que o usuario nao informa elementos repetidos no mesmo
+ * vetor
+ */
+
+#include <stdio.h>
+
+#define DIM 5
+
+void matrix_input(int *matrix, int line, int col);
+void input_flush(void);
+void menu_print(void);
+void matrix_print(int *matrix, int line, int col);
+void array_sum(int *arr1, int *arr2, int dim, int *result);
+void array_mult(int *arr1, int *arr2, int dim, int *result);
+int array_diff(int *arr1, int *arr2, int dim, int *result);
+int array_intersect(int *arr1, int *arr2, int dim, int *result);
+int array_merge(int *arr1, int *arr2, int dim, int *result);
+
+int main (void)
+{
+    int X[DIM], Y[DIM], resultante[DIM * 2], r_dim;
+    char opcao;
+
+    printf("Matriz X: ");
+    matrix_input(X, 1, DIM);
+    printf("\nMatriz Y: ");
+    matrix_input(Y, 1, DIM);
+    printf("\n");
+    
+    menu_print();
+    scanf("%c", &opcao);
+    
+    switch (opcao)
+    {
+        case 'a':
+            array_sum(X, Y, DIM, resultante);
+            printf("\nVetor resultante:\n");
+            matrix_print(resultante, 1, DIM);
+            break;
+
+        case 'b':
+            array_mult(X, Y, DIM, resultante);
+            printf("\nVetor resultante:\n");
+            matrix_print(resultante, 1, DIM);
+            break;
+
+        case 'c':
+            r_dim = array_diff(X, Y, DIM, resultante);
+            printf("\nVetor resultante:\n");
+            matrix_print(resultante, 1, r_dim);
+            break;
+
+        case 'd':
+            r_dim = array_intersect(X, Y, DIM, resultante);
+            printf("\nVetor resultante:\n");
+            matrix_print(resultante, 1, r_dim);
+            break;
+
+        case 'e':
+            r_dim = array_merge(X, Y, DIM, resultante);
+            printf("\nVetor resultante:\n");
+            matrix_print(resultante, 1, r_dim);
+            break;
+
+        default:
+            printf("Opcao invalida\n");
+            return 1;
+    }
+
+    return 0;
+}
+
+void matrix_input(int *matrix, int line, int col)
+{
+    int i, j;
+
+    printf("Entrada de dados: Matriz %d x %d\n", line, col);
+    for (i = 0; i < line; i++)
+    {
+        printf("Inserir %d valores(separados por espaco) para linha %d:\n",
+                col, i + 1);
+        for (j = 0; j < col; j++)
+        {
+            scanf("%d", matrix + i * col + j);
+        }
+    input_flush();
+    }
+}
+
+void input_flush(void)
+{
+    int c;
+    c = getchar();
+    while (c != '\n' && c != '\r' && c != EOF) c = getchar();
+}
+
+void menu_print(void)
+{
+    char *title = "Menu Principal\n";
+    char *a = "(a) somar de cada elemento de X com o\
+ elemento da mesma posicao em Y\n";
+    char *b = "(b) multiplicar cada elemento de X com\
+ o elemento da mesma posicao em Y\n";
+    char *c = "(c) todos os elementos de X que nao existam em Y\n";
+    char *d = "(d) apenas os elementos que aparecem nos dois vetores\n";
+    char *e = "(e) todos os elementos de X e todos os elementos de\
+ Y que nao estao em X\n";
+    char *enunc = "Escolha uma opção: ";
+
+    printf("%s\n%s%s%s%s%s\n%s", title, a, b, c, d, e, enunc);
+}
+
+void matrix_print(int *matrix, int line, int col)
+{
+    int i, j;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < col; j++)
+            printf("%8d ", *(matrix + i * col + j)); 
+
+        printf("\n");
+    }
+}
+
+void array_sum(int *arr1, int *arr2, int dim, int *result)
+{
+    int i;
+    for (i = 0; i < dim; i++)
+        result[i] = arr1[i] + arr2[i];
+}
+
+void array_mult(int *arr1, int *arr2, int dim, int *result)
+{
+    int i;
+    for (i = 0; i < dim; i++)
+        result[i] = arr1[i] * arr2[i];
+}
+
+int array_diff(int *arr1, int *arr2, int dim, int *result)
+{
+    int i, j, k, flag;
+    for (i = 0, j = 0, flag = 0; i < dim; i++, flag = 0)
+    {
+        for (k = 0; k < dim; k++)
+        {
+            if (arr1[i] == arr2[k])
+            {
+                flag++;
+                break;
+            }
+        }
+        if (flag == 0)
+        {
+            result[j] = arr1[i];
+            j++;
+        }
+    }
+
+    return j;
+}
+
+int array_intersect(int *arr1, int *arr2, int dim, int *result)
+{
+    int i, j, k;
+    for (i = 0, j = 0; i < dim; i++)
+    {
+        for (k = 0; k < dim; k++)
+        {
+            if (arr1[i] == arr2[k])
+            {
+                result[j] = arr1[i];
+                j++;
+                break;
+            }
+        }
+    }
+
+    return j;
+}
+
+int array_merge(int *arr1, int *arr2, int dim, int *result)
+{
+    int i, j, k, is_double;
+
+    for (i = 0, j = 0, is_double = 0; i < dim; i++, is_double = 0)
+    {
+        result[j] = arr1[i];
+        j++;
+
+        for (k = 0; k < dim; k++)
+        {
+            if (arr2[i] == arr1[k])
+            {
+                is_double = 1;
+                break;
+            }
+        }
+
+        if (is_double == 0)
+        {
+            result[j] = arr2[i];
+            j++;
+        }
+    }
+
+    return j;
+}
+
+/* Saidas
+
+Matriz X: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+
+Matriz Y: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+6 7 8 9 10
+
+Menu Principal
+
+(a) somar de cada elemento de X com o elemento da mesma posicao em Y
+(b) multiplicar cada elemento de X com o elemento da mesma posicao em Y
+(c) todos os elementos de X que nao existam em Y
+(d) apenas os elementos que aparecem nos dois vetores
+(e) todos os elementos de X e todos os elementos de Y que nao estao em X
+
+Escolha uma opção: a
+
+Vetor resultante:
+       7        9       11       13       15 
+
+*******************************************************************************
+
+Matriz X: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+
+Matriz Y: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+6 7 8 9 10
+
+Menu Principal
+
+(a) somar de cada elemento de X com o elemento da mesma posicao em Y
+(b) multiplicar cada elemento de X com o elemento da mesma posicao em Y
+(c) todos os elementos de X que nao existam em Y
+(d) apenas os elementos que aparecem nos dois vetores
+(e) todos os elementos de X e todos os elementos de Y que nao estao em X
+
+Escolha uma opção: b
+
+Vetor resultante:
+       6       14       24       36       50 
+
+*******************************************************************************
+Matriz X: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+
+Matriz Y: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+3 4 5 6 7
+
+Menu Principal
+
+(a) somar de cada elemento de X com o elemento da mesma posicao em Y
+(b) multiplicar cada elemento de X com o elemento da mesma posicao em Y
+(c) todos os elementos de X que nao existam em Y
+(d) apenas os elementos que aparecem nos dois vetores
+(e) todos os elementos de X e todos os elementos de Y que nao estao em X
+
+Escolha uma opção: c
+
+Vetor resultante:
+       1        2 
+       
+*******************************************************************************
+       
+Matriz X: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+
+Matriz Y: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+3 4 5 6 7
+
+Menu Principal
+
+(a) somar de cada elemento de X com o elemento da mesma posicao em Y
+(b) multiplicar cada elemento de X com o elemento da mesma posicao em Y
+(c) todos os elementos de X que nao existam em Y
+(d) apenas os elementos que aparecem nos dois vetores
+(e) todos os elementos de X e todos os elementos de Y que nao estao em X
+
+Escolha uma opção: d
+
+Vetor resultante:
+       3        4        5
+
+*******************************************************************************
+
+Matriz X: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+1 2 3 4 5
+
+Matriz Y: Entrada de dados: Matriz 1 x 5
+Inserir 5 valores(separados por espaco) para linha 1:
+3 4 5 6 7
+
+Menu Principal
+
+(a) somar de cada elemento de X com o elemento da mesma posicao em Y
+(b) multiplicar cada elemento de X com o elemento da mesma posicao em Y
+(c) todos os elementos de X que nao existam em Y
+(d) apenas os elementos que aparecem nos dois vetores
+(e) todos os elementos de X e todos os elementos de Y que nao estao em X
+
+Escolha uma opção: e
+
+Vetor resultante:
+       1        2        3        4        6        5        7 
+
+*/
+
+/*
+ * 	Programa: L05e06.c
+ * 	Autor: Fernando Giongo
+ * 	Data: 30/05/2022;
+ * 	Descrição: Este programa le uma matriz 5 x 4 contendo as seguintes
+ * 	informacoes na forma de numeros inteiros:
+ *
+ * 	primeira coluna: numero de matricula
+ * 	segunda coluna: media das provas
+ * 	terceira coluna: media dos trabalhos
+ * 	quarta coluna: nota final
+ *
+ * 	o programa:
+ * 	(a) le as tres primeiras informacoes de cada aluno
+ * 	(b) calcula a nota final como a soma da media das provas e da media
+ * 	    dos trabalhos
+ * 	(c) imprime a matricula do aluno que obteve a maior nota final
+ * 	    (assumindo que so existe uma maior nota)
+ * 	(d) imprime a media aritmetica das notas finais
+ */
+
+#include <stdio.h>
+
+#define LINES 5
+#define COLUMNS 4
+
+void matrix_input_notas(int line, int col, int *matrix);
+void input_flush(void);
+void calcular_media(int lines, int cols, int *matrix);
+void matrix_print(int line, int col, int *matrix);
+int matricula_maior_nota_final(int lines, int cols, int *matrix);
+float media_notas_finais(int lines, int cols, int *matrix);
+
+int main (void)
+{
+    int matriz[LINES][COLUMNS];
+
+    matrix_input_notas(LINES, COLUMNS, &matriz[0][0]);
+    calcular_media(LINES, COLUMNS, &matriz[0][0]);
+    printf("\n");
+    matrix_print(LINES, COLUMNS, &matriz[0][0]);
+    printf("\nMatricula do aluno com maior nota final: %d\n",
+            matricula_maior_nota_final(LINES, COLUMNS, &matriz[0][0]));
+    printf("\nMedia aritmetica das notas finais: %.2f\n",
+            media_notas_finais(LINES, COLUMNS, &matriz[0][0]));
+    return 0;
+}
+
+void matrix_input_notas(int line, int col, int *matrix)
+{
+    int i, j;
+
+    printf("\nEntrada de dados:\n");
+    printf("(1) Numero de matricula\n");
+    printf("(2) Media das provas\n");
+    printf("(3) Media dos trabalhos\n");
+
+    for (i = 0; i < line; i++)
+    {
+        printf("\nInserir os %d valores(separados por espaco) para aluno no. %d:\n", col - 1, i + 1);
+        for (j = 0; j < col; j++)
+        {
+            if (j == 3) continue;
+            scanf("%d", matrix + i * col + j);
+        }
+    input_flush();
+    }
+}
+
+void input_flush(void)
+{
+    int c;
+    c = getchar();
+    while (c != '\n' && c != '\r' && c != EOF) c = getchar();
+}
+
+void calcular_media(int lines, int cols, int *matrix)
+{
+    int i, j, *final_ptr;
+
+    for (i = 0; i < lines; i++)
+    {
+        final_ptr = matrix + i * cols + (cols - 1);
+        *final_ptr = 0;
+
+        for (j = 0; j < cols; j++)
+        {
+            if (j == 0 || j == cols - 1) continue;
+            *final_ptr += *(matrix + i * cols + j);
+        }
+    }
+}
+
+void matrix_print(int line, int col, int *matrix)
+{
+    int i, j;
+    for (i = 0; i < line; i++)
+    {
+        for (j = 0; j < col; j++)
+            printf("%8d ", *(matrix + i * col + j)); 
+
+        printf("\n");
+    }
+}
+
+int matricula_maior_nota_final(int lines, int cols, int *matrix)
+{
+    int i, final, matricula, *matricula_ptr, *final_ptr;
+    final = 0;
+
+    for (i = 0; i < lines; i++)
+    {
+        matricula_ptr = matrix + i * cols;
+        final_ptr = matrix + i * cols + (cols - 1);
+        if (*final_ptr > final)
+        {
+            final = *final_ptr;
+            matricula = *matricula_ptr;
+        }
+    }
+    return matricula;
+}
+
+float media_notas_finais(int lines, int cols, int *matrix)
+{
+    int i, final, *final_ptr;
+    final = 0;
+
+    for (i = 0; i < lines; i++)
+    {
+        final_ptr = matrix + i * cols + (cols - 1);
+        final += *final_ptr;
+    }
+
+    return final / (float) lines;
+}
+
+/* Saidas
+
+Entrada de dados:
+(1) Numero de matricula
+(2) Media das provas
+(3) Media dos trabalhos
+
+Inserir os 3 valores(separados por espaco) para aluno no. 1:
+101 23 48
+
+Inserir os 3 valores(separados por espaco) para aluno no. 2:
+102 39 42
+
+Inserir os 3 valores(separados por espaco) para aluno no. 3:
+103 18 33
+
+Inserir os 3 valores(separados por espaco) para aluno no. 4:
+104 49 41
+
+Inserir os 3 valores(separados por espaco) para aluno no. 5:
+105 26 30
+
+     101       23       48       71 
+     102       39       42       81 
+     103       18       33       51 
+     104       49       41       90 
+     105       26       30       56 
+
+Matricula do aluno com maior nota final: 104
+
+Media aritmetica das notas finais: 69.80
+
+*/
+
