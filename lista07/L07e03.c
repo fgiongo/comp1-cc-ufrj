@@ -41,7 +41,9 @@ int main (void)
 	return 0;
 }
 
-/* Saida
+/* Resposta: ver Descricao no cabecalho deste fonte
+
+Saida
 
 20 10
 
