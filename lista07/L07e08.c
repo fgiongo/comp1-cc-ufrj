@@ -15,14 +15,12 @@ long max_malloc(long min_size)
     long step = 1;
 
     if (!(ptr = (char *) malloc(min_size + step))) return min_size;
-    else
+    free(ptr);
+    
+    while ((ptr = (char *) malloc(min_size + step)))
     {
+        step *= 2;
         free(ptr);
-        while ((ptr = (char *) malloc(min_size + step)))
-        {
-            step *= 2;
-            free(ptr);
-        }
     }
 
     step /= 2;
