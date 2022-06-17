@@ -1,17 +1,37 @@
 /*
- * 	Programa: nomeDoPrograma.c
+ * 	Programa: L07e08
  * 	Autor: Fernando Giongo
- * 	Data: dd/mm/aaaa
- * 	Descrição:
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa tenta alocar o máximo de memória possível na máquina
+ * 	e imprime o resultado
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+
+long max_malloc(long min_size)
+{
+    char *ptr;
+    long step = 1;
+
+    if (!(ptr = (char *) malloc(min_size + step))) return min_size;
+    else
+    {
+        free(ptr);
+        while ((ptr = (char *) malloc(min_size + step)))
+        {
+            step *= 2;
+            free(ptr);
+        }
+    }
+
+    step /= 2;
+    return max_malloc(min_size + step);
+}
 
 int main (void)
 {
-	/* Aqui vao as declaracoes das variaveis */
-
-	/* Aqui vao os comandos do programa */
-
-	return 0;
+    printf("%li\n", max_malloc(0));
+    return 0;
 }
+
