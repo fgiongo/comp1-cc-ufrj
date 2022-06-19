@@ -1,0 +1,686 @@
+/*
+ * 	Programa: L07e01
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/06/2022
+ * 	Descrição: 
+ *
+ * 	O programa inicializa uma variavel var do tipo inteiro e um
+ * 	ponteiro varPtr que aponta para essa variavel. O programa entao imprime o
+ * 	endereco de var usando o operador & na variavel var, e imprime o valor de
+ * 	varPtr, que é também o endereço de var printado anteriormente.
+ *
+ * 	Em seguida, o programa imprime o valor de var de duas maneiras: usando a
+ * 	var e usando o ponteiro varPtr em conjuncao com o operador *.
+ *
+ * 	Em seguida, o programa imprime o endereço de var e de duas maneiras usando
+ * 	os operadores &* (endereço do conteudo de) em varPtr, e *& (conteudo do
+ * 	endereço de) em varPtr;
+ *
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+    int var;
+    int *varPtr;
+
+    var = 7;
+    varPtr = &var;
+
+    printf("O endereco de var e %p\n"
+            "O valor de varPtr e %p\n", &var, varPtr);
+
+    printf("O valor de var e %d\n"
+            "O valor que varPtr aponta e %d\n", var, *varPtr);
+
+    printf("Mostrando que * e & sao complementares\n"
+            "&*varPtr = %p\n"
+            "*&varPtr = %p\n",
+            &*varPtr, *&varPtr);
+
+	return 0;
+}
+
+/* Resposta do exercício: ver a descricao no cabecalho desde fonte
+ *
+ * Saidas:
+
+O endereco de var e 0x7fff0756999c
+O valor de varPtr e 0x7fff0756999c
+O valor de var e 7
+O valor que varPtr aponta e 7
+Mostrando que * e & sao complementares
+&*varPtr = 0x7fff0756999c
+*&varPtr = 0x7fff0756999c
+
+*/
+
+/*
+ * 	Programa: L07e02
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/06/2022
+ * 	Descrição:
+ *
+ *  O programa usa uma funcao chamada troca para receber os enderecos de duas
+ *  variaveis de tipo inteiro. Ele usa uma variavel local (temp) para guardar
+ *  o conteudo de um dos enderecos recebidos e desta forma pode trocar os
+ *  conteudos dos dois enderecos um pelo outro.
+ *
+ *  Finalmente o programa imprime os valores trocados.
+ */
+
+#include <stdio.h>
+
+void troca (int *a, int *b)
+{
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main (void)
+{
+    int x, y;
+
+    scanf("%d %d", &x, &y);
+    troca(&x, &y);
+    printf("Troquei ----> %d %d\n", x, y);
+	return 0;
+}
+
+/* Saida
+
+3 4
+Troquei ----> 4 3
+
+*/
+
+/*
+ * 	Programa: L07e03
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição:
+ * 	
+ * 	O programa inicializa as variaveis do tipo int (i = 10, j = 20), declara
+ * 	uma terceira variavel inteira (temp) e declara mais dois ponteiros para
+ * 	inteiros (p1 e p2).
+ *
+ * 	Em seguida, p1 é incializado com o valor do endereço de i e p2 é iniciali-
+ * 	zado com o valor do endereço de j. A variavel temp recebe o conteúdo de i
+ * 	(o valor 10) por meio do uso do operador * em p1, que apontava para i.
+ *
+ * 	Em seguida, a variável i recebe o valor de j (20) por meio do uso do ope-
+ * 	rador * em p2, que apontava para j, e também em p1, que apontava para i.
+ *
+ * 	Em seguida, o valor de temp (que é 10) é atribuído a j. Os valores de i e j
+ * 	foram trocados um pelo outro em relação ao que eram no inicio da main.
+ *
+ * 	Finalmente, o programa imprime os valores de i e j (20 e 10, respectivamen-
+ * 	te).
+ */
+
+#include <stdio.h>
+
+int main (void)
+{
+    int i = 10, j = 20;
+    int temp;
+    int *p1, *p2;
+
+    p1 = &i;
+    p2 = &j;
+    temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+
+    printf("%d %d\n", i, j);
+
+	return 0;
+}
+
+/* Resposta: ver Descricao no cabecalho deste fonte
+
+Saida
+
+20 10
+
+*/
+
+/*
+ * 	Programa: L07e04
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/06/2022
+ * 	Descrição:
+ *
+ *  O programa usa uma funcao chamada troca para receber os enderecos de duas
+ *  variaveis de tipo inteiro. Ele usa uma variavel local (temp) para guardar
+ *  o conteudo de um dos enderecos recebidos e desta forma pode trocar os
+ *  conteudos dos dois enderecos um pelo outro.
+ *
+ *  Finalmente o programa imprime os valores trocados.
+ */
+
+#include <stdio.h>
+
+void troca (int *a, int *b)
+{
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main (void)
+{
+    int x, y;
+    int *px, *py;
+
+    px = &x;
+    py = &y;
+
+    scanf("%d %d", px, py);
+    troca(px, py);
+    printf("Troquei ----> %d %d\n", *px, *py);
+	return 0;
+}
+
+/* Saida
+
+3 4
+Troquei ----> 4 3
+
+*/
+
+/*
+ * 	Programa: L07e05
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/06/2022
+ * 	Descrição:
+ *
+ * 	O programa pega uma cadeia e retorna a segunda palavra desta cadeia.
+ * 	Isso e' feito por meio de uma funcao que percorre a cadeia e retorna um
+ * 	ponteiro para o endereco apos o primeiro espaco.
+ *
+ * 	O programa entao imprime a cadeia, usando como endereco de referencia o
+ * 	retorno da funcao. Desta forma, o programa imprime a cadeia a partir da
+ * 	segunda palavra.
+ */
+
+#include <stdio.h>
+
+char * acheSobrenome(char nome[])
+{
+    char *pnome;
+    int i = 0;
+
+    while (nome[i] != ' ')
+    {
+        i++;
+    }
+    i++;
+    pnome = &nome[i];
+    return pnome;
+}
+
+int main (void)
+{
+    char nomeCompleto[80];
+    char *p;
+
+    puts("Entre com o seu nome e um sobrenome.");
+    gets(nomeCompleto);
+
+    p = acheSobrenome(nomeCompleto);
+
+    puts(p);
+
+	return 0;
+}
+
+/* Saida
+
+Entre com o seu nome e um sobrenome.
+Fernando Giongo
+Giongo
+
+*/
+
+/*
+ * 	Programa: L07e06
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa aloca dinamicamente um vetor de numeros inteiros,
+ * 	os preenche com ints e depois imprime a soma de seus valores.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (void)
+{
+    int i, n, *pvetor;
+    float media;
+
+    printf("Quantos numeros?\n");
+    scanf("%d", &n);
+
+    pvetor = (int *) malloc(n * sizeof(int));
+    if (!pvetor)
+    {
+        puts("Sem memoria.\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++)
+        scanf("%d", &pvetor[i]);
+
+    for (i = 0; i < n; i++)
+        media += pvetor[i];
+
+    printf("%f\n", media);
+
+    free(pvetor);
+
+	return 0;
+}
+
+/* Saida
+
+Quantos numeros?
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+55.000000
+
+*/
+
+/*
+ * 	Programa: L07e07
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa aloca dinamicamente um vetor de numeros inteiros,
+ * 	os preenche com ints e depois imprime a soma de seus valores.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (void)
+{
+    int i, n, *pvetor;
+    float media;
+
+    printf("Quantos numeros?\n");
+    scanf("%d", &n);
+
+    pvetor = (int *) malloc(n * sizeof(int));
+    if (!pvetor)
+    {
+        puts("Sem memoria.\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++)
+        scanf("%d", pvetor + i);
+
+    for (i = 0; i < n; i++)
+        media += *(pvetor + i);
+
+    printf("%f\n", media);
+
+    free(pvetor);
+
+	return 0;
+}
+
+/* Saida
+
+Quantos numeros?
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+55.000000
+
+*/
+
+/*
+ * 	Programa: L07e08
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa tenta alocar o máximo de memória possível na máquina
+ * 	e imprime o resultado
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+long max_malloc(long min_size)
+{
+    char *ptr;
+    long step = 1;
+
+    if (!(ptr = (char *) malloc(min_size + step))) return min_size;
+    free(ptr);
+    
+    while ((ptr = (char *) malloc(min_size + step)))
+    {
+        step *= 2;
+        free(ptr);
+    }
+
+    step /= 2;
+    return max_malloc(min_size + step);
+}
+
+int main (void)
+{
+    printf("%li\n", max_malloc(0));
+    return 0;
+}
+
+/*
+ * 	Programa: L07e09
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa aloca dinamicamente um vetor de numeros inteiros,
+ * 	os preenche com ints e depois imprime a soma de seus valores.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int *maiores_que_n(int *entrada, int dim_entrada, float n);
+
+int main (void)
+{
+    int i, n, *pvetor, *maiores;
+    float media = 0;
+
+    printf("Quantos numeros?\n");
+    scanf("%d", &n);
+
+    pvetor = (int *) malloc(n * sizeof(int));
+    if (!pvetor)
+    {
+        puts("Sem memoria.\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++)
+        scanf("%i", (pvetor + i));
+
+    for (i = 0; i < n; i++)
+        media += *(pvetor + i);
+
+    media /= (float) n;
+    printf("Media: %.2f\n", media);
+    printf("Numeros maiores que media:\n");
+
+    maiores = maiores_que_n(pvetor, n, media);
+    if (!maiores)
+    {
+        free(pvetor);
+        return 1;
+    }
+    
+    for (i = 0; i < *maiores; i++)
+        printf("%d ", maiores[i + 1]);
+
+    printf("\n");
+    
+    free(pvetor);
+    free(maiores);
+
+	return 0;
+}
+
+int *maiores_que_n(int *entrada, int dim_entrada, float n)
+{
+    int i, j = 0, dim_saida = 0, *saida;
+
+    for (i = 0; i < dim_entrada; i++)
+       if(entrada[i] > n) dim_saida++;
+
+    saida = (int *) malloc(dim_saida * sizeof(int) + 1);
+    if(!saida) return saida;
+
+    saida[j] = dim_saida;
+    for (i = 0; i < dim_entrada; i++)
+    {
+        if(entrada[i] > n) 
+        {
+            saida[j + 1] = entrada[i];
+            j++;
+        }
+    }
+
+    return saida;
+}
+
+/* Saida
+
+Quantos numeros?                                                                              
+10                                                                                            
+1 2 3 4 5 6 7 8 9 10                                                                          
+Media: 5.50                                                                                   
+Numeros maiores que media:                                                                    
+6 7 8 9 10 
+
+*/
+
+/*
+ * 	Programa: L07e10
+ * 	Autor: Fernando Giongo
+ * 	Data: 16/02/2022
+ * 	Descrição: O programa aloca dinamicamente um vetor de numeros inteiros,
+ * 	os preenche com ints e depois imprime a soma de seus valores.
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void sort_ascending(int *arr, int dim);
+void print_arr_ints(int *arr, int dim);
+
+int main (void)
+{
+    int i, n, *pvetor;
+    float media = 0;
+
+    printf("Quantos numeros?\n");
+    scanf("%d", &n);
+
+    pvetor = (int *) malloc(n * sizeof(int));
+    if (!pvetor)
+    {
+        puts("Sem memoria.\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++)
+        scanf("%d", pvetor + i);
+
+    for (i = 0; i < n; i++)
+        media += *(pvetor + i);
+
+    media /= (float) n;
+    printf("%f\n", media);
+
+    sort_ascending(pvetor, n);
+    print_arr_ints(pvetor, n);
+
+    free(pvetor);
+
+	return 0;
+}
+
+void sort_ascending(int *arr, int dim)
+{
+    int i, j = 0, temp;
+    int changes_were_made;
+
+    do{
+        changes_were_made = 0;
+        j++;
+        for (i = 0; i < dim - j; i++)
+        {
+            if (arr[i] > arr[i + 1])
+            {
+                temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+                changes_were_made = 1;
+            }
+        }
+    }
+    while (changes_were_made);
+}
+
+void print_arr_ints(int *arr, int dim)
+{
+    int i;
+
+    for (i = 0; i < dim; i++)
+    {
+        if (i == dim - 1) printf("%d\n", arr[i]);
+        else printf("%d, ", arr[i]);
+    }
+}
+
+/* Saida
+
+Quantos numeros?
+10
+1 3 2 10 5 4 9 6 7 8
+5.500000
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+
+*/
+
+/*
+ * 	Programa: L07e11
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/06/2022
+ * 	Descrição: O programa imprime uma string a partir de sua segunda palavra,
+ * 	ou a partir do primeiro espaco.
+ */
+
+#include <stdio.h>
+
+void misterio(char *n);
+
+int main (void)
+{
+    char nome[41];
+    gets(nome);
+
+    misterio(nome);
+
+	return 0;
+}
+
+void misterio(char *n)
+{
+    while(*n != ' ') n++;
+    n++;
+    puts(n);
+}
+
+/* saida
+
+fernando giongo
+giongo
+
+*/
+
+/*
+ * 	Programa: L07e12
+ * 	Autor: Fernando Giongo
+ * 	Data: 19/06/2022
+ * 	Descrição:
+ */
+
+#include <stdio.h>
+
+void converter(int numBase10, int numBase2[32]);
+
+int main (void)
+{
+    int nb10, nb2[32], i, teste = 1;
+
+    while (1)
+    {
+        scanf("%d", &nb10);
+        if (nb10 < 0) break;
+
+        converter(nb10, nb2);
+
+        printf("Teste %d\n", teste++);
+        printf("%d\n", nb10);
+
+        for (i = 31; i > 0; i--)
+            printf("%d", nb2[i]);
+
+        printf("\n\n");
+    }
+    
+	return 0;
+}
+
+void converter (int numBase10, int numBase2[32])
+{
+    int i;
+
+    for (i = 0; i < 32; i++)
+        numBase2[i] = 0;
+
+    for (i = 1; numBase10 > 0; i++)
+    {
+        if (i > 31) break;
+        numBase2[i] = numBase10 % 2;
+        numBase10 /= 2;
+    }
+}
+
+/* saida
+
+5
+Teste 1
+0000000000000000000000000000101
+
+9
+Teste 2
+9
+0000000000000000000000000001001
+
+13
+Teste 3
+13
+0000000000000000000000000001101
+
+0
+Teste 4
+0
+0000000000000000000000000000000
+
+-1
+
+*/

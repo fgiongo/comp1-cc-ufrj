@@ -1,17 +1,36 @@
 /*
- * 	Programa: nomeDoPrograma.c
+ * 	Programa: L07e11
  * 	Autor: Fernando Giongo
- * 	Data: dd/mm/aaaa
- * 	Descrição:
+ * 	Data: 19/06/2022
+ * 	Descrição: O programa imprime uma string a partir de sua segunda palavra,
+ * 	ou a partir do primeiro espaco.
  */
 
 #include <stdio.h>
 
+void misterio(char *n);
+
 int main (void)
 {
-	/* Aqui vao as declaracoes das variaveis */
+    char nome[41];
+    gets(nome);
 
-	/* Aqui vao os comandos do programa */
+    misterio(nome);
 
 	return 0;
 }
+
+void misterio(char *n)
+{
+    while(*n != ' ') n++;
+    n++;
+    puts(n);
+}
+
+/* saida
+
+fernando giongo
+giongo
+
+*/
+
