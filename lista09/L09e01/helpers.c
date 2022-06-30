@@ -20,12 +20,9 @@ contato * ler_contatos(FILE * arquivo)
             return NULL;
         }
 
-        if (!(linked_list_insert(novo_contato, lista, sizeof(contato))))
-        {
-            free(novo_contato);
-            return NULL;
-        }
+        linked_list_insert(novo_contato, lista, sizeof(contato));
     }
+
     return lista;
 }
 
