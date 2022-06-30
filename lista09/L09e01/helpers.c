@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
 #include "defs.h"
 #include "utils.h"
 
@@ -62,14 +63,17 @@ void remover_contato(void)
 void inserir_contato(contato *lista)
 {
     contato *novo = malloc(sizeof(contato));
+    char *nome;
+
     if (novo == NULL)
     {
         printf("Memória insuficiente.\n");
         exit(1);
     }
 
-    novo -> nome = get_string(0, MAX_CHARS, "Nome: ");
-    novo -> telefone = get_long(0, LONG_MAX, "Telefone: ");
+    nome = get_string(0, MAX_CHARS, "Nome: ");
+    strcpy(novo -> nome, nome);
+
     novo -> data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
     novo -> data_de_nascimento.mes = get_int(0, INT_MAX, "Mês de nascimento: ");
     novo -> data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
