@@ -59,7 +59,7 @@ void remover_contato(void)
 {
 }
 
-void inserir_contato(void)
+void inserir_contato(contato *lista)
 {
     contato *novo = malloc(sizeof(contato));
     if (novo == NULL)
@@ -70,12 +70,12 @@ void inserir_contato(void)
 
     novo -> nome = get_string(0, MAX_CHARS, "Nome: ");
     novo -> telefone = get_long(0, LONG_MAX, "Telefone: ");
-    novo -> data.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
-    novo -> data.mes = get_int(0, INT_MAX, "Mês de nascimento: ");
-    novo -> data.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
+    novo -> data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
+    novo -> data_de_nascimento.mes = get_int(0, INT_MAX, "Mês de nascimento: ");
+    novo -> data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo -> prox = NULL;
 
-    linked_list_insert(novo, lista_de_contatos, sizeof(contato));
+    linked_list_insert(novo, lista, sizeof(contato));
 }
 
 void imprime_aniversariantes(void)

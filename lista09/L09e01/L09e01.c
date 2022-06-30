@@ -41,7 +41,7 @@ int main(void)
     switch (menu_principal())
     {
         case 1:
-            inserir_contato();
+            inserir_contato(lista_de_contatos);
             break;
 
         case 2:

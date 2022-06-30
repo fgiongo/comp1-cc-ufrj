@@ -9,6 +9,6 @@ void pesquisa_letra(void);
 void lista_contatos(void);
 void pesquisa_nome(void);
 void remover_contato(void);
-void inserir_contato(void);
+void inserir_contato(contato *lista);
 void imprime_aniversariantes(void);
 
