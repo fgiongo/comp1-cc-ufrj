@@ -23,7 +23,7 @@ contato *ler_contatos(FILE *arquivo)
             return NULL;
         }
 
-        linked_list_insert((void *)novo_contato, (void *)&lista, sizeof(contato));
+        linked_list_insert((void *) novo_contato, (void *) &lista);
     }
 
     return lista;
@@ -51,6 +51,9 @@ void pesquisa_letra(void)
 
 void lista_contatos(contato *lista)
 {
+    
+    printf("\nLista de contatos:\n\n");
+
     while (lista != NULL)
     {
         printf("%s\n", lista->nome);
@@ -58,12 +61,39 @@ void lista_contatos(contato *lista)
     }
 }
 
-void pesquisa_nome(void)
+void pesquisa_nome(contato **lista)
 {
+    char * a_pesquisar;
+
+    a_pesquisar = get_string(MAX_CHARS, "Nome do contato: ");
+
+    contato *lista_temp = NULL;
+    while (linked_list_insert((void *) linked_list_remove( (void *) lista), (void *) &lista_temp) && strcmp(a_pesquisar, lista_temp->nome));
+
+    printf("Nome: %s\n", lista_temp->nome);
+    printf("Telefone: %li\n", lista_temp->telefone);
+    printf("Data de nascimento: %d/%d/%d\n", lista_temp->data_de_nascimento.dia, lista_temp->data_de_nascimento.mes, lista_temp->data_de_nascimento.ano);
+  
+    while(lista_temp != NULL){
+        linked_list_insert((void *) linked_list_remove((void *) &lista_temp), (void *) lista);
+    }
+
 }
 
-void remover_contato(void)
+void remover_contato(contato **lista)
 {
+    char * a_remover;
+
+    a_remover = get_string(MAX_CHARS, "Nome do contato a remover: ");
+
+    contato *lista_temp = NULL;
+    while (linked_list_insert((void *) linked_list_remove( (void *) lista), (void *) &lista_temp) && strcmp(a_remover, lista_temp->nome));
+    free(linked_list_remove((void *) &lista_temp));
+  
+    while(lista_temp != NULL){
+
+        linked_list_insert((void *) linked_list_remove((void *) &lista_temp), (void *) lista);
+    }
 }
 
 void inserir_contato(contato **lista)
@@ -80,12 +110,13 @@ void inserir_contato(contato **lista)
     nome = get_string(MAX_CHARS, "Nome: ");
     strcpy(novo->nome, nome);
 
+    novo->telefone = get_long(0, LONG_MAX, "Telefone: ");
     novo->data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
     novo->data_de_nascimento.mes = get_int(0, INT_MAX, "Mês de nascimento: ");
     novo->data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo->prox = NULL;
 
-    linked_list_insert((void *)novo, (void *)lista, sizeof(contato));
+    linked_list_insert((void *) novo, (void *) lista);
 }
 
 void imprime_aniversariantes(void)

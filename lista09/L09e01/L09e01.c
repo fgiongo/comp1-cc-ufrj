@@ -15,6 +15,7 @@
 int main(void)
 {
     contato *lista_de_contatos = NULL;
+    
     while (1)
     {
         switch (menu_principal())
@@ -24,11 +25,11 @@ int main(void)
             break;
 
         case 2:
-            remover_contato();
+            remover_contato(&lista_de_contatos);
             break;
 
         case 3:
-            pesquisa_nome();
+            pesquisa_nome(&lista_de_contatos);
             break;
 
         case 4:

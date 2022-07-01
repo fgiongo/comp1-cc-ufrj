@@ -11,19 +11,23 @@ void input_flush()
 	while(c != '\n') c = fgetc(stdin);
 }
 
-void linked_list_insert(void *new_node, void **list, int node_size)
+int linked_list_insert(void *new_node, void **list)
 {
     /* !!!caution!!!
      * function relies on pointer to next node being AT START of node! */
 
-    void *temp;
+    void *temp; 
     unsigned char **ptr_next;
 
+    if(new_node == NULL) return 0;
+    
     temp = *list;
     *list = new_node;
 
     ptr_next = new_node;
     *ptr_next = temp;
+
+	return 1;
 }
 
 void *linked_list_remove(void **list)
