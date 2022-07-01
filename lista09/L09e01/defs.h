@@ -12,9 +12,9 @@ typedef struct _DATA
 
 typedef struct _CONTATO
 {
+	struct _CONTATO *prox;
 	char nome[MAX_CHARS + 1];
 	long telefone;
 	data data_de_nascimento;
-	struct _CONTATO *prox;
 } contato;
 #endif

@@ -14,30 +14,7 @@
 
 int main(void)
 {
-	FILE * arquivo_contatos;
-	contato * lista_de_contatos = NULL;
-
-	if (!(arquivo_contatos = fopen(FILEPATH, "r")))
-	{
-		printf("Criando nova lista de contatos...\n");
-		if (!(arquivo_contatos = fopen(FILEPATH, "w")))
-		{
-			printf("Nao foi possivel criar arquivo de contatos\n");
-			return 1;
-		}
-        else fclose(arquivo_contatos);
-	}
-
-    printf("Lendo lista de contatos...\n");
-
-    if (!(arquivo_contatos = fopen(FILEPATH, "r")))
-    {
-			printf("Nao foi possivel abrir arquivo de contatos\n");
-            return 1;
-    }
-
-    lista_de_contatos = (contato *) ler_contatos(arquivo_contatos);
-
+    contato *lista_de_contatos = NULL;
     while (1)
     {
         switch (menu_principal())
@@ -76,4 +53,3 @@ int main(void)
 
     return 0;
 }
-

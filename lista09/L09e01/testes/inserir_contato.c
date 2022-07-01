@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
 
 #define MAX_CHARS 40
 
@@ -15,6 +17,32 @@ typedef struct _CONTATO
 	long telefone;
 	data data_de_nascimento;
 } contato;
+
+void input_flush()
+{
+	char c;
+	c = fgetc(stdin);
+	while(c != '\n') c = fgetc(stdin);
+}
+
+int get_int(int min, int max, char * prompt)
+{
+	int i;
+	do
+	{
+		printf("%s", prompt);
+		if(!(scanf("%d", &i)))
+		{
+			input_flush();
+			continue;
+		}
+	}
+	while(i < min || i > max);
+
+    input_flush();
+
+	return i;
+}
 
 char *get_string(int length, char * prompt)
 {
@@ -64,11 +92,17 @@ void inserir_contato(contato **lista)
     novo -> data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo -> prox = NULL;
 
-    linked_list_insert((void *) &novo, (void *) lista, sizeof(contato));
+    linked_list_insert((void *) novo, (void *) lista, sizeof(contato));
 }
 
 int main (void)
 {
-    contato *lista;
+    contato *lista = NULL;
+    inserir_contato(&lista);
+    inserir_contato(&lista);
+
+    printf("%s\n", lista -> nome);
+    printf("%s\n", lista -> prox -> nome);
+
     return 0;
 }
