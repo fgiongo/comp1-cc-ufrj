@@ -22,7 +22,7 @@ contato * ler_contatos(FILE * arquivo)
             return NULL;
         }
 
-        linked_list_insert((void *) &novo_contato, (void *) &lista, sizeof(contato));
+        linked_list_insert((void *) novo_contato, (void *) &lista, sizeof(contato));
     }
 
     return lista;
@@ -88,7 +88,7 @@ void inserir_contato(contato **lista)
     novo -> data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo -> prox = NULL;
 
-    linked_list_insert((void *) &novo, (void *) lista, sizeof(contato));
+    linked_list_insert((void *) novo, (void *) lista, sizeof(contato));
 }
 
 void imprime_aniversariantes(void)

@@ -30,7 +30,7 @@ char *get_string(int length, char * prompt)
     return c;
 }
 
-void linked_list_insert(void **new_node, void **list, int node_size)
+void linked_list_insert(void *new_node, void **list, int node_size)
 {
     /* !!!caution!!!
      * function relies on pointer to next node being AT START of node! */
@@ -39,9 +39,9 @@ void linked_list_insert(void **new_node, void **list, int node_size)
     unsigned char **ptr_next;
 
     temp = *list;
-    *list = *new_node;
+    *list = new_node;
 
-    ptr_next = *new_node;
+    ptr_next = new_node;
     *ptr_next = temp;
 }
 
