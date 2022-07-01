@@ -38,10 +38,12 @@ int main(void)
 
     lista_de_contatos = (contato *) ler_contatos(arquivo_contatos);
 
-    switch (menu_principal())
+    while (1)
     {
+        switch (menu_principal())
+        {
         case 1:
-            inserir_contato(lista_de_contatos);
+            inserir_contato(&lista_de_contatos);
             break;
 
         case 2:
@@ -53,7 +55,7 @@ int main(void)
             break;
 
         case 4:
-            lista_contatos();
+            lista_contatos(lista_de_contatos);
             break;
 
         case 5:
@@ -69,8 +71,9 @@ int main(void)
 
         default:
             return 2;
+        }
     }
 
-	return 0;
+    return 0;
 }
 

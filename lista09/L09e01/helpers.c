@@ -22,7 +22,7 @@ contato * ler_contatos(FILE * arquivo)
             return NULL;
         }
 
-        linked_list_insert(novo_contato, lista, sizeof(contato));
+        linked_list_insert((void *) &novo_contato, (void *) &lista, sizeof(contato));
     }
 
     return lista;
@@ -48,8 +48,16 @@ void pesquisa_letra(void)
 {
 }
 
-void lista_contatos(void)
+void lista_contatos(contato *lista)
 {
+    contato *node;
+
+    node = lista;
+    while(node != NULL)
+    {
+        printf("%s\n", node -> nome);
+        node = node -> prox;
+    }
 }
 
 void pesquisa_nome(void)
@@ -58,9 +66,10 @@ void pesquisa_nome(void)
 
 void remover_contato(void)
 {
+    
 }
 
-void inserir_contato(contato *lista)
+void inserir_contato(contato **lista)
 {
     contato *novo = malloc(sizeof(contato));
     char *nome;
@@ -71,7 +80,7 @@ void inserir_contato(contato *lista)
         exit(1);
     }
 
-    nome = get_string(0, MAX_CHARS, "Nome: ");
+    nome = get_string(MAX_CHARS, "Nome: ");
     strcpy(novo -> nome, nome);
 
     novo -> data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
@@ -79,7 +88,7 @@ void inserir_contato(contato *lista)
     novo -> data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo -> prox = NULL;
 
-    linked_list_insert(novo, lista, sizeof(contato));
+    linked_list_insert((void *) &novo, (void *) lista, sizeof(contato));
 }
 
 void imprime_aniversariantes(void)

@@ -8,7 +8,7 @@ typedef struct _LISTA_NOMES
     int i;
 } lista_nomes;
 
-void linked_list_insert(void **new_node, void **list, int node_size)
+void linked_list_insert(void *new_node, void **list, int node_size)
 {
     /* !!!caution!!!
      * function relies on pointer to next node being AT START of node! */
@@ -17,9 +17,9 @@ void linked_list_insert(void **new_node, void **list, int node_size)
     unsigned char **ptr_next;
 
     temp = *list;
-    *list = *new_node;
+    *list = new_node;
 
-    ptr_next = *new_node;
+    ptr_next = new_node;
     *ptr_next = temp;
 }
 
@@ -53,7 +53,7 @@ int main(void)
         }
 
         novo_nome -> i = j + 1;
-        linked_list_insert((void *) &novo_nome, (void *) &grupo_de_comp, sizeof(lista_nomes));
+        linked_list_insert((void *) novo_nome, (void *) &grupo_de_comp, sizeof(lista_nomes));
     }
 
     novo_nome = grupo_de_comp;

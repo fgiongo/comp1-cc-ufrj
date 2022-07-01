@@ -54,6 +54,8 @@ int get_int(int min, int max, char * prompt)
 	}
 	while(i < min || i > max);
 
+    input_flush();
+
 	return i;
 }
 
@@ -70,6 +72,8 @@ long get_long(long min, long max, char * prompt)
 		}
 	}
 	while(i < min || i > max);
+
+    input_flush();
 
 	return i;
 }
