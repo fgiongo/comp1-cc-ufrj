@@ -74,38 +74,16 @@ long get_long(long min, long max, char * prompt)
 	return i;
 }
 
-char *get_string(int min, int max, char * prompt)
+char *get_string(int length, char * prompt)
 {
-    /* esta funcao nao esta funcionando ainda, nao sei pq */
-
-    int i = 0;
-    char c;
-    int length = 128;
-    char *string = (char *) malloc(sizeof(char) * length);
-
+    int i;
+    char *c;
     printf("%s", prompt);
-    input_flush();
+    c = calloc(length, sizeof(char));
+    fgets(c, length, stdin);
 
-    do
-    {
-        c = getc(stdin);
-        string[i] = c;
-        i++;
+    for (i = 0; c[i] != '\0'; i++)
+        if (c[i] == '\n') c[i] = '\0';
 
-        if (i > max)
-        {
-            string[i] = '\0';
-            return string;
-        }
-
-        if (i == length)
-        {
-            length *= 2;
-            string = (char *) realloc(string, length);
-        }
-    }
-    while (c != '\n');
-
-    string[i - 1] = '\0';
-    return string;
+    return c;
 }
