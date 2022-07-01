@@ -14,24 +14,13 @@ void input_flush()
 void linked_list_insert(void *new_node, void *list, int node_size)
 {
     /* !!!caution!!!
-     * function relies on pointer to next node being AT END of node! */
+     * function relies on pointer to next node being AT START of node! */
 
-    unsigned char *ptr, **ptr_next;
+    void **ptr_next;
 
-
-    if (list == NULL)
-    {
-        ptr_next = (unsigned char **) new_node + (node_size - sizeof(ptr));
-        *ptr_next = NULL;
-
-        list = new_node;
-        return;
-    }
-
-    ptr = list;
+    ptr_next = new_node;
+    *ptr_next = list;
     list = new_node;
-    ptr_next = (unsigned char **) list + (node_size - sizeof(ptr));
-    *ptr_next = ptr;
 }
 
 int get_int(int min, int max, char * prompt)
