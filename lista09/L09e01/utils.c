@@ -23,6 +23,18 @@ void linked_list_insert(void *new_node, void *list, int node_size)
     list = new_node;
 }
 
+void *linked_list_remove(void *list)
+{
+    /* !!! caution !!!
+     * function relies on pointer to next node being AT START of node! */
+
+    unsigned char **ptr_next;
+
+    ptr_next = list;
+    list = *ptr_next;
+    return (void *) ptr_next;
+}
+
 int get_int(int min, int max, char * prompt)
 {
 	int i;
