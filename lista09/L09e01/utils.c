@@ -26,7 +26,7 @@ void linked_list_insert(void **new_node, void **list, int node_size)
     *ptr_next = temp;
 }
 
-void *linked_list_rem(void **list)
+void *linked_list_remove(void **list)
 {
     /* !!! caution !!!
      * function relies on pointer to next node being AT START of node! */
