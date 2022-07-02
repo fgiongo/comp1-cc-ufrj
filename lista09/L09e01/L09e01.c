@@ -14,7 +14,9 @@
 
 int main(void)
 {
-    contato *lista_de_contatos = ler_contatos();
+    contato *lista_de_contatos = ler_contatos(
+            fopen(FILEPATH, "r")
+            );
     
     while (1)
     {
@@ -29,7 +31,16 @@ int main(void)
             break;
 
         case 3:
-            pesquisa_nome(&lista_de_contatos);
+            if (!
+                    imprimir_contato(
+                        pesquisa_nome(
+
+                            get_string(MAX_CHARS, "Pesquisa por nome: "), 
+                            &lista_de_contatos
+
+                            )
+                        )
+               ) printf("Contato não encontrado\n");
             break;
 
         case 4:
