@@ -14,9 +14,9 @@
 
 int main(void)
 {
-    contato *lista_de_contatos = ler_contatos(
-            fopen(FILEPATH, "r")
-            );
+    contato *lista_de_contatos;
+
+    lista_de_contatos = NULL;
     
     while (1)
     {
@@ -27,28 +27,50 @@ int main(void)
             break;
 
         case 2:
-            remover_contato(&lista_de_contatos);
+            if (!remover_contato(
+                    get_string(MAX_CHARS, "Nome do contato a remover: "),
+                    &lista_de_contatos)) printf("\nContato inexistente\n");
+            else
+                printf("\nContato removido com sucesso\n");
             break;
 
         case 3:
-            if (!
-                    imprimir_contato(
-                        pesquisa_nome(
+            if (!imprimir_contato(
+                    pesquisar_nome(
 
-                            get_string(MAX_CHARS, "Pesquisa por nome: "), 
-                            &lista_de_contatos
+                        get_string(MAX_CHARS, "Pesquisa por nome: "),
+                        &lista_de_contatos
 
-                            )
-                        )
-               ) printf("Contato não encontrado\n");
+                        )))
+                printf("\nContato não encontrado\n");
             break;
 
         case 4:
-            lista_contatos(lista_de_contatos);
-            break;
+            if (!listar_contatos(lista_de_contatos))
+                printf("Não há contatos\n");
+                break;
 
         case 5:
-            pesquisa_letra();
+                {
+                    char c = get_char("Inserir letra inicial: ");
+                    contato *lista_temp, *lista_match, *removido;
+                    lista_temp = NULL;
+
+                    while ((removido = (void *)lista_enc_remover((void *)&lista_de_contatos)) != NULL)
+                    {
+                        if (removido->nome[0] == c)
+                            lista_enc_inserir((void *)removido, (void *)&lista_match);
+                        else lista_enc_inserir((void *)removido, (void *)&lista_temp);
+                    }
+
+                    printf("Lista temporaria construida\n");
+                    listar_contatos(lista_match);
+
+                    while ((removido = (void *)lista_enc_remover((void *) &lista_temp)) != NULL)
+                        lista_enc_inserir((void *)removido, (void *)&lista_de_contatos);
+
+                    printf("Lista principal reconstruida\n");
+                }
             break;
 
         case 6:

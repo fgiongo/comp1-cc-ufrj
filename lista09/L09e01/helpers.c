@@ -6,6 +6,7 @@
 #include <string.h>
 #include "defs.h"
 #include "utils.h"
+#include "helpers.h"
 
 contato *ler_contatos(FILE *arquivo)
 {
@@ -28,23 +29,45 @@ int menu_principal(void)
     return get_int(1, 7, "Escolha opcao: ");
 }
 
-void pesquisa_letra(void)
+contato *pesquisar_letra(char c, contato **lista)
 {
+    contato *lista_temp, *lista_match, *removido;
+
+    while ((removido = lista_enc_remover(lista)) != NULL)
+    {
+        if (removido->nome[0] == c)
+            lista_enc_inserir(removido, &lista_match);
+        else lista_enc_inserir(removido, &lista_temp);
+    }
+
+    printf("Lista temporaria construida\n");
+    
+    while ((removido = lista_enc_remover(&lista_temp)) != NULL)
+        lista_enc_inserir(removido, lista);
+
+    printf("Lista principal reconstruida\n");
+
+    return lista_match;
 }
 
-void lista_contatos(contato *lista)
+int listar_contatos(contato *lista)
 {
     
+    if (lista == NULL) return 0;
+
     printf("\nLista de contatos:\n\n");
 
     while (lista != NULL)
     {
-        printf("%s\n", lista->nome);
+        imprimir_contato(lista);
+        printf("\n");
         lista = lista->prox;
     }
+
+    return 1;
 }
 
-contato *pesquisa_nome(char *a_pesquisar, contato **lista)
+contato *pesquisar_nome(char *a_pesquisar, contato **lista)
 {
     contato *contato_removido, *match, *lista_temp;
     int contato_inserido, nomes_diferentes;
@@ -54,10 +77,9 @@ contato *pesquisa_nome(char *a_pesquisar, contato **lista)
 
     do
     {
-        contato_removido = (contato *) linked_list_remove((void *) lista);
+        contato_removido = lista_enc_remover(lista);
 
-        contato_inserido = linked_list_insert((void *) contato_removido,
-                (void *) &lista_temp);
+        contato_inserido = lista_enc_inserir(contato_removido, &lista_temp);
 
         if (lista_temp != NULL)
             nomes_diferentes = strcmp(a_pesquisar, lista_temp->nome);
@@ -69,27 +91,43 @@ contato *pesquisa_nome(char *a_pesquisar, contato **lista)
   
     while(lista_temp != NULL)
     {
-        linked_list_insert((void *) linked_list_remove((void *) &lista_temp),
-                (void *) lista);
+        lista_enc_inserir(lista_enc_remover(&lista_temp), lista);
     }
     
     return match;
 }
 
-void remover_contato(contato **lista)
+int remover_contato(char *a_remover, contato **lista)
 {
-    char * a_remover;
+    contato *contato_removido, *lista_temp;
+    int contato_inserido, nomes_diferentes;
 
-    a_remover = get_string(MAX_CHARS, "Nome do contato a remover: ");
+    nomes_diferentes = 1;
+    lista_temp = NULL;
 
-    contato *lista_temp = NULL;
-    while (linked_list_insert((void *) linked_list_remove((void *) lista), (void *) &lista_temp) && strcmp(a_remover, lista_temp->nome));
-    free(linked_list_remove((void *) &lista_temp));
-  
-    while(lista_temp != NULL){
+    do
+    {
+        contato_removido = lista_enc_remover(lista);
 
-        linked_list_insert((void *) linked_list_remove((void *) &lista_temp), (void *) lista);
+        contato_inserido = lista_enc_inserir(contato_removido, &lista_temp);
+
+        if (lista_temp != NULL)
+            nomes_diferentes = strcmp(a_remover, lista_temp->nome);
+
+    } while (contato_inserido && nomes_diferentes);
+
+    if (!nomes_diferentes)
+    {
+        free(lista_enc_remover(&lista_temp));
     }
+    else return 0;
+
+    while(lista_temp != NULL)
+    {
+        lista_enc_inserir(lista_enc_remover(&lista_temp), lista);
+    }
+
+    return 1;
 }
 
 void inserir_contato(contato **lista)
@@ -106,13 +144,13 @@ void inserir_contato(contato **lista)
     nome = get_string(MAX_CHARS, "Nome: ");
     strcpy(novo->nome, nome);
 
-    novo->telefone = get_long(0, LONG_MAX, "Telefone: ");
+    novo->telefone = get_long(0, LONG_MAX, "Telefone (sem espaços ou outros símbolos): ");
     novo->data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
     novo->data_de_nascimento.mes = get_int(0, INT_MAX, "Mês de nascimento: ");
     novo->data_de_nascimento.dia = get_int(0, INT_MAX, "Dia de nascimento: ");
     novo->prox = NULL;
 
-    linked_list_insert((void *) novo, (void *) lista);
+    lista_enc_inserir(novo, lista);
 }
 
 void imprime_aniversariantes(void)
@@ -131,4 +169,28 @@ int imprimir_contato(contato *contato)
             contato->data_de_nascimento.ano);
 
     return 1;
+}
+
+int linked_link_inserir(contato *node, contato **lista)
+{
+    contato *temp;
+
+    if (node->prox == NULL) return 0;
+
+    temp = *lista;
+    *lista = node;
+    node->prox = temp;
+
+    return 1;
+}
+
+contato *lista_enc_remover(contato **lista)
+{
+    contato *temp;
+
+    temp = *lista;
+    *lista = (*lista)->prox;
+    temp->prox = NULL;
+
+    return temp;
 }
