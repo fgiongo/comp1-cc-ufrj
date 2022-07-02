@@ -37,6 +37,8 @@ void *linked_list_remove(void **list)
 
     void *temp, **next;
 
+    if (*list == NULL) return *list;
+
     temp = *list;
     next = *list;
     *list = *next;

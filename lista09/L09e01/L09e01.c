@@ -14,7 +14,7 @@
 
 int main(void)
 {
-    contato *lista_de_contatos = NULL;
+    contato *lista_de_contatos = ler_contatos();
     
     while (1)
     {

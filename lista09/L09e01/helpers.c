@@ -9,24 +9,7 @@
 
 contato *ler_contatos(FILE *arquivo)
 {
-    contato *lista = NULL, *novo_contato;
-
-    while (!(feof(arquivo)))
-    {
-        novo_contato = malloc(sizeof(contato));
-        if (novo_contato == NULL)
-            return NULL;
-
-        if (!(fread(novo_contato, sizeof(contato), 1, arquivo)))
-        {
-            free(novo_contato);
-            return NULL;
-        }
-
-        linked_list_insert((void *) novo_contato, (void *) &lista);
-    }
-
-    return lista;
+    return NULL;
 }
 
 int menu_principal(void)
@@ -64,20 +47,35 @@ void lista_contatos(contato *lista)
 void pesquisa_nome(contato **lista)
 {
     char * a_pesquisar;
+    contato *contato_removido;
+    int contato_inserido, nomes_diferentes;
 
     a_pesquisar = get_string(MAX_CHARS, "Nome do contato: ");
 
     contato *lista_temp = NULL;
-    while (linked_list_insert((void *) linked_list_remove( (void *) lista), (void *) &lista_temp) && strcmp(a_pesquisar, lista_temp->nome));
 
-    printf("Nome: %s\n", lista_temp->nome);
-    printf("Telefone: %li\n", lista_temp->telefone);
-    printf("Data de nascimento: %d/%d/%d\n", lista_temp->data_de_nascimento.dia, lista_temp->data_de_nascimento.mes, lista_temp->data_de_nascimento.ano);
+    do
+    {
+        contato_removido = (contato *) linked_list_remove((void *) lista);
+
+        contato_inserido = linked_list_insert((void *) contato_removido,
+                (void *) &lista_temp);
+
+        nomes_diferentes = strcmp(a_pesquisar, lista_temp->nome);
+    }
+    while (contato_inserido && nomes_diferentes);
+
+    if(!nomes_diferentes)
+    {
+        printf("Nome: %s\n", lista_temp->nome);
+        printf("Telefone: %li\n", lista_temp->telefone);
+        printf("Data de nascimento: %d/%d/%d\n", lista_temp->data_de_nascimento.dia, lista_temp->data_de_nascimento.mes, lista_temp->data_de_nascimento.ano);
+    }
   
     while(lista_temp != NULL){
-        linked_list_insert((void *) linked_list_remove((void *) &lista_temp), (void *) lista);
+        linked_list_insert((void *) linked_list_remove((void *) &lista_temp),
+                (void *) lista);
     }
-
 }
 
 void remover_contato(contato **lista)
@@ -87,7 +85,7 @@ void remover_contato(contato **lista)
     a_remover = get_string(MAX_CHARS, "Nome do contato a remover: ");
 
     contato *lista_temp = NULL;
-    while (linked_list_insert((void *) linked_list_remove( (void *) lista), (void *) &lista_temp) && strcmp(a_remover, lista_temp->nome));
+    while (linked_list_insert((void *) linked_list_remove((void *) lista), (void *) &lista_temp) && strcmp(a_remover, lista_temp->nome));
     free(linked_list_remove((void *) &lista_temp));
   
     while(lista_temp != NULL){
