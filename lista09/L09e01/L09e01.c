@@ -14,9 +14,9 @@
 
 int main(void)
 {
-    contato *lista_de_contatos;
+    contato *lista_de_contatos, *lista_tmp;
 
-    lista_de_contatos = NULL;
+    lista_de_contatos = lista_tmp = NULL;
     
     while (1)
     {
@@ -51,12 +51,21 @@ int main(void)
                 break;
 
         case 5:
-                listar_contatos(
-                        pesquisar_letra(
-                            get_char("Inserir inicial: "),
-                            &lista_de_contatos
-                            )
-                        );
+                lista_tmp = pesquisar_letra(
+                        get_char("Inserir inicial: "),
+                        &lista_de_contatos);
+
+                listar_contatos(lista_tmp);
+                
+                printf("listar_contatos concluída\n");
+
+                while (lista_tmp != NULL)
+                {
+                    lista_enc_inserir(
+                            lista_enc_remover(&lista_tmp),
+                            &lista_de_contatos);
+                }
+                
             break;
 
         case 6:
