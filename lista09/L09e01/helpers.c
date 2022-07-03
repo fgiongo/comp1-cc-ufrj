@@ -32,6 +32,7 @@ int menu_principal(void)
 contato *pesquisar_letra(char c, contato **lista)
 {
     contato *lista_temp, *lista_match, *removido;
+    lista_temp = lista_match = NULL;
 
     while ((removido = lista_enc_remover(lista)) != NULL)
     {
@@ -40,12 +41,10 @@ contato *pesquisar_letra(char c, contato **lista)
         else lista_enc_inserir(removido, &lista_temp);
     }
 
-    printf("Lista temporaria construida\n");
-    
     while ((removido = lista_enc_remover(&lista_temp)) != NULL)
+    {
         lista_enc_inserir(removido, lista);
-
-    printf("Lista principal reconstruida\n");
+    }
 
     return lista_match;
 }
@@ -133,7 +132,7 @@ int remover_contato(char *a_remover, contato **lista)
 void inserir_contato(contato **lista)
 {
     contato *novo = malloc(sizeof(contato));
-    char *nome;
+    char *nome_novo;
 
     if (novo == NULL)
     {
@@ -141,8 +140,9 @@ void inserir_contato(contato **lista)
         exit(1);
     }
 
-    nome = get_string(MAX_CHARS, "Nome: ");
-    strcpy(novo->nome, nome);
+    nome_novo = get_string(MAX_CHARS, "Nome: ");
+    strcpy(novo->nome, nome_novo);
+    free(nome_novo);
 
     novo->telefone = get_long(0, LONG_MAX, "Telefone (sem espaços ou outros símbolos): ");
     novo->data_de_nascimento.ano = get_int(0, INT_MAX, "Ano de nascimento: ");
@@ -157,40 +157,44 @@ void imprime_aniversariantes(void)
 {
 }
 
-int imprimir_contato(contato *contato)
+int imprimir_contato(contato *c)
 {
-    if (contato == NULL) return 0;
+    if (c == NULL) return 0;
     
-    printf("Nome: %s\n", contato->nome);
-    printf("Telefone: %li\n", contato->telefone);
+    printf("Nome: %s\n", c->nome);
+    printf("Telefone: %li\n", c->telefone);
     printf("Data de nascimento: %d/%d/%d\n",
-            contato->data_de_nascimento.dia,
-            contato->data_de_nascimento.mes,
-            contato->data_de_nascimento.ano);
+            c->data_de_nascimento.dia,
+            c->data_de_nascimento.mes,
+            c->data_de_nascimento.ano);
 
     return 1;
 }
 
-int linked_link_inserir(contato *node, contato **lista)
+int lista_enc_inserir(contato *c, contato **lista)
 {
-    contato *temp;
+    contato *tmp;
 
-    if (node->prox == NULL) return 0;
+    if (c == NULL) return 0;
 
-    temp = *lista;
-    *lista = node;
-    node->prox = temp;
+    tmp = *lista;
+    *lista = c;
+    c->prox = tmp;
 
     return 1;
 }
 
 contato *lista_enc_remover(contato **lista)
 {
-    contato *temp;
+    contato *tmp;
 
-    temp = *lista;
-    *lista = (*lista)->prox;
-    temp->prox = NULL;
+    tmp = *lista;
 
-    return temp;
+    if (*lista != NULL)
+    {
+        *lista = (*lista)->prox;
+        tmp->prox = NULL;
+    }
+
+    return tmp;
 }

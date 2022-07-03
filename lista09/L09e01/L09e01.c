@@ -51,26 +51,12 @@ int main(void)
                 break;
 
         case 5:
-                {
-                    char c = get_char("Inserir letra inicial: ");
-                    contato *lista_temp, *lista_match, *removido;
-                    lista_temp = NULL;
-
-                    while ((removido = (void *)lista_enc_remover((void *)&lista_de_contatos)) != NULL)
-                    {
-                        if (removido->nome[0] == c)
-                            lista_enc_inserir((void *)removido, (void *)&lista_match);
-                        else lista_enc_inserir((void *)removido, (void *)&lista_temp);
-                    }
-
-                    printf("Lista temporaria construida\n");
-                    listar_contatos(lista_match);
-
-                    while ((removido = (void *)lista_enc_remover((void *) &lista_temp)) != NULL)
-                        lista_enc_inserir((void *)removido, (void *)&lista_de_contatos);
-
-                    printf("Lista principal reconstruida\n");
-                }
+                listar_contatos(
+                        pesquisar_letra(
+                            get_char("Inserir inicial: "),
+                            &lista_de_contatos
+                            )
+                        );
             break;
 
         case 6:
