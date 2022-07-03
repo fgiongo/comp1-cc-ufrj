@@ -1,3 +1,50 @@
+    /* defs.h */
+
+#ifndef DEFS_H
+#define DEFS_H
+#define FILEPATH "./contatos.txt"
+#define MAX_CHARS 40
+
+typedef struct _DATA
+{
+	int dia, mes, ano;
+} data;
+
+typedef struct _CONTATO
+{
+	struct _CONTATO *prox;
+	char nome[MAX_CHARS + 1];
+	long telefone;
+	data data_de_nascimento;
+} contato;
+#endif
+
+/* helpers.h */
+
+#include <stdio.h>
+#include "defs.h"
+
+int ler_contatos(char *path, contato **lista);
+int menu_principal(void);
+contato *pesquisar_letra(char c, contato **lista);
+int listar_contatos(contato *lista);
+contato *pesquisar_nome(char *a_pesquisar, contato **lista);
+int remover_contato(char *a_remover, contato **lista);
+void inserir_contato(contato **lista);
+void imprime_aniversariantes(contato *lista, int mes);
+int imprimir_contato(contato *contato);
+int lista_enc_inserir(contato *node, contato **lista);
+contato *lista_enc_remover(contato **lista);
+int salvar_lista(contato *lista, char * path);
+
+/* utils.h */
+
+void input_flush();
+int get_int(int min, int max, char * prompt);
+long get_long(long min, long max, char * prompt);
+char *get_string(int length, char * prompt);
+char get_char(char * prompt);
+
 /* helpers.c 
    funções auxiliares relativas a funcionalidades específicas necessárias na main
 */
@@ -306,4 +353,185 @@ int salvar_lista(contato *lista, char * path)
     free(str);
     fclose(arquivo);
     return 1;
+}
+
+/* Nome do arquivo: L09e01.c
+ * Data: 29/06/2022
+ * Autores: Fernando Giongo e Samuel Sampaio
+ * Descricao: O programa gerencia uma agenda de contatos. Cada item da agenda
+ * contem nome, telefone e data de aniversario do contato. O programa permite
+ * listar contatos e pesquisar contatos por nome e inicial e permite imprimir
+ * os aniversariantes do mes.
+ */
+
+#include <stdio.h>
+#include "defs.h"
+#include "utils.h"
+#include "helpers.h"
+
+int main(void)
+{
+    contato *lista_de_contatos, *lista_tmp;
+    FILE *arquivo;
+
+    lista_de_contatos = lista_tmp = NULL;
+
+    if (!(ler_contatos(FILEPATH, &lista_de_contatos)))
+        printf("Lista de contatos vazia, insira um novo contato\n\n");
+    else
+        printf("Abrindo lista de contatos...\n\n");
+
+    while (1)
+    {
+        switch (menu_principal())
+        {
+        case 1:
+            inserir_contato(&lista_de_contatos);
+
+            break;
+
+        case 2:
+            if (!remover_contato(
+                    get_string(MAX_CHARS, "Nome do contato a remover: "),
+                    &lista_de_contatos)) printf("\nContato inexistente\n");
+            else
+                printf("\nContato removido com sucesso\n");
+
+            break;
+
+        case 3:
+            if (!imprimir_contato(
+                    pesquisar_nome(
+
+                        get_string(MAX_CHARS, "Pesquisa por nome: "),
+                        &lista_de_contatos
+
+                        )))
+                printf("\nContato não encontrado\n");
+
+            break;
+
+        case 4:
+            if (!listar_contatos(lista_de_contatos))
+                printf("Não há contatos\n");
+
+            break;
+
+        case 5:
+                lista_tmp = pesquisar_letra(
+                        get_char("Inserir inicial: "),
+                        &lista_de_contatos);
+
+                listar_contatos(lista_tmp);
+                
+                printf("listar_contatos concluída\n");
+
+                while (lista_tmp != NULL)
+                {
+                    lista_enc_inserir(
+                            lista_enc_remover(&lista_tmp),
+                            &lista_de_contatos);
+                }
+                
+            break;
+
+        case 6:
+            imprime_aniversariantes(
+                lista_de_contatos,
+                get_int(1, 12, "Insira mês de aniversário a procurar: "));
+
+            break;
+
+        case 7:
+            if (!(salvar_lista(lista_de_contatos, FILEPATH)))
+            {
+                printf("Não foi possível salvar arquivo de contatos\n");
+            }
+            return 0;
+
+        default:
+            return 2;
+        }
+    }
+}
+
+/* utils.c 
+   funções utilitárias simples e generalistas (não específicas ao programa em si)
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "utils.h"
+
+void input_flush()
+{
+	char c;
+	c = fgetc(stdin);
+	while(c != '\n') c = fgetc(stdin);
+}
+
+int get_int(int min, int max, char * prompt)
+{
+	int i;
+	do
+	{
+		printf("%s", prompt);
+		if(!(scanf("%d", &i)))
+		{
+			input_flush();
+			continue;
+		}
+	}
+	while(i < min || i > max);
+
+    input_flush();
+
+	return i;
+}
+
+long get_long(long min, long max, char * prompt)
+{
+	long i;
+	do
+	{
+		printf("%s", prompt);
+		if(!(scanf("%li", &i)))
+		{
+			input_flush();
+			continue;
+		}
+	}
+	while(i < min || i > max);
+
+    input_flush();
+
+	return i;
+}
+
+char *get_string(int length, char * prompt)
+{
+    int i;
+    char *c;
+    printf("%s", prompt);
+    c = calloc(length, sizeof(char));
+    fgets(c, length, stdin);
+
+    for (i = 0; c[i] != '\0'; i++)
+        if (c[i] == '\n') c[i] = '\0';
+
+    return c;
+}
+
+char get_char(char * prompt)
+{
+    char c;
+
+    do
+    {
+        printf("%s", prompt);
+        c = fgetc(stdin);
+    }
+    while(c == '\n');
+
+    return c;
 }
