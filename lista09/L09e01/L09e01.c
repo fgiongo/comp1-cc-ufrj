@@ -69,7 +69,7 @@ int main(void)
             break;
 
         case 6:
-            imprime_aniversariantes();
+            imprime_aniversariantes(lista_de_contatos, get_int(1, 12, "Insira mês de aniversário a procurar: "));
             break;
 
         case 7:

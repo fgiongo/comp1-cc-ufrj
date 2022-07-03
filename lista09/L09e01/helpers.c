@@ -153,8 +153,21 @@ void inserir_contato(contato **lista)
     lista_enc_inserir(novo, lista);
 }
 
-void imprime_aniversariantes(void)
+void imprime_aniversariantes(contato *lista, int mes)
 {
+    int imprimiu_contato = 0;
+    while (lista != NULL)
+    {
+        if ((lista->data_de_nascimento.mes) == mes)
+        {
+            printf("\n");
+            imprimir_contato(lista);
+            imprimiu_contato = 1;
+        }
+
+        lista = lista->prox;
+    }
+    if (!imprimiu_contato) printf("\nNão existem contatos com aniversário no mês %d\n", mes);
 }
 
 int imprimir_contato(contato *c)
