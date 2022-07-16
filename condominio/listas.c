@@ -30,6 +30,12 @@ bloco *lista_enc_remover_bloco(bloco **lista)
     return tmp;
 }
 
+void esvaziar_lista_blocos(bloco **lista_blocos)
+{
+    while (*lista_blocos->prox != NULL)
+        free(lista_enc_remover_bloco(lista_blocos));
+}
+
 int lista_enc_inserir_condominio(condominio *c, condominio **lista)
 {
     condominio *tmp;
@@ -56,4 +62,10 @@ condominio *lista_enc_remover_condominio(condominio **lista)
     }
 
     return tmp;
+}
+
+void esvaziar_lista_cond(condominio **lista_cond)
+{
+    while (*lista_cond->prox != NULL)
+        free(lista_enc_remover_condominio(lista_cond));
 }

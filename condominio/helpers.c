@@ -14,46 +14,57 @@ void imprimir_dados(condominio *cond)
     }
 }
 
-condominio *novo_condominio(char *nome, char *rua, int num_rua, int qtd_blocos, int *input_qtd_andares,
-int *input_qtd_apts)
+condominio *criar_novo_condominio(
+        char *nome,
+        char *rua,
+        int num_rua,
+        int qtd_blocos,
+        int *qtd_andares,
+        int *qtd_apts)
 {
     int i;
-    char c = 'A';
+    char c;
 
-    bloco *lista_blocos, *bloco_novo;
+    bloco *lista_blocos, *novo_bloco;
     condominio *cond_novo;
 
-    cond_novo = (condominio *) malloc(sizeof(condominio));
+    novo_cond = (condominio *) malloc(sizeof(condominio));
     if (cond_novo == NULL) return NULL;
 
-    for (i = 0; i < qtd_blocos, i++)
+    for (i = 0, c = 'A'; i < qtd_blocos, i++)
     {
-        bloco_novo = (bloco *)malloc(sizeof(bloco));
-        if (bloco_novo == NULL) return NULL;
-
-        bloco_novo->letra = c;
-        bloco_novo->qtd_andares = input_qtd_andares;
-        bloco_novo->qtd_apts = input_qtd_apts;
-        bloco_novo->prox = NULL;
-        c++;
-
-
-        if (!(lista_enc_inserir_bloco(bloco_novo, &lista_blocos)))
+        novo_bloco = criar_novo_bloco(c + i, qtd_andares, qtd_apts);
+        if (novo_bloco = NULL)
         {
-            while(bloco_novo != NULL)
-            {
-                free(lista_enc_remover_bloco(&bloco_novo));
-            }
+            esvaziar_lista_blocos(&lista_blocos);
+            free(novo_cond);
             return NULL;
-        } 
+        }
+
+        if (!(lista_enc_inserir_bloco(
     }
 
     cond_novo->bloco = lista_blocos;
 
-    strcpy(cond_novo.nome, nome);
+    strcpy(cond_novo->nome, nome);
+    strcpy(cond_novo->endereco_condominio.rua, rua);
+    cond_novo->endereco_condominio.num = num_rua;
+    cond_novo->prox = NULL;
 
     return cond_novo;
+}
 
+bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts)
+{
+    bloco *novo_bloco = (*bloco) malloc(sizeof(bloco));
+    if (novo_bloco == NULL) return NULL;
+
+    novo_bloco->letra = letra;
+    novo_bloco->qtd_andares = qtd_andares;
+    novo_bloco->qtd_apts = qtd_apts;
+    novo_bloco->prox = NULL;
+
+    return novo_bloco;
 }
 
 int menu_principal(void)
