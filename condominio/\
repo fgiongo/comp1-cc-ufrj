@@ -67,7 +67,7 @@ condominio *criar_novo_condominio(
 bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts)
 {
     bloco *novo_bloco;
-    novo_bloco = (bloco *) malloc(sizeof(bloco));
+    novo_bloco = (*bloco) malloc(sizeof(bloco));
     if (novo_bloco == NULL) return NULL;
 
     novo_bloco->letra = letra;
@@ -96,30 +96,3 @@ int menu_principal(void)
     return get_int(1, 9, "Escolha opcao: ");
 }
 
-int *criar_vetor_andares(int num_blocos)
-{
-    int *vetor_andares, i;
-    vetor_andares = (int *)malloc(sizeof(int) * num_blocos);
-
-    for (i = 0; i < num_blocos; i++)
-    {
-        printf("Bloco %d:/n", i + 1);
-        vetor_andares[i] = get_int(1, MAX_ANDARES, "Numero de andares: ");
-    }
-    
-    return vetor_andares;
-}
-
-int *criar_vetor_apts(int num_blocos)
-{
-    int *vetor_apts, i;
-    vetor_apts = (int *)malloc(sizeof(int) * num_blocos);
-
-    for (i = 0; i < num_blocos; i++)
-    {
-        printf("Bloco %d:/n", i + 1);
-        vetor_apts[i] = get_int(1, MAX_APTS, "Numero de apartamentos por andar: ");
-    }
-    
-    return vetor_apts;
-}

@@ -1,6 +1,8 @@
 #ifndef DEFS_H
 #define DEFS_H
 #define MAX_CHARS 41
+#define MAX_ANDARES 163
+#define MAX_APTS 20
 
 typedef struct _ENDERECO
 {

@@ -13,6 +13,7 @@ condominio *criar_novo_condominio(
 
 bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts);
 
-
-
 void imprimir_dados(condominio *cond);
+
+int *criar_vetor_andares(int num_blocos);
+int *criar_vetor_apts(int num_blocos);
