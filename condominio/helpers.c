@@ -1,16 +1,23 @@
-#include <stdin.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "listas.h"
 #include "defs.h"
+#include "utils.h"
+#include "helpers.h"
 
 void imprimir_dados(condominio *cond)
 {
     printf("Dados sobre condomínio %s:\n\n", cond->nome);
-    printf("Endereço: %s, %d\n", cond->endereco->rua, cond->endereco->num);
+    printf("Endereço: %s, %d\n",
+            cond->endereco_condominio.rua,
+            cond->endereco_condominio.num);
 
-    while (cond->bloco != NULL)
+    while (cond->lista_blocos != NULL)
     {
-        printf("Bloco %c:\n", cond->bloco->letra);
-        printf("%d andares\n", cond->bloco.qtd_andares);
-        printf("%d apartamentos por andar\n", cond->bloco.qtd_apts);
+        printf("Bloco %c:\n", cond->lista_blocos->letra);
+        printf("%d andares\n", cond->lista_blocos->qtd_andares);
+        printf("%d apartamentos por andar\n", cond->lista_blocos->qtd_apts);
     }
 }
 
@@ -25,38 +32,42 @@ condominio *criar_novo_condominio(
     int i;
     char c;
 
-    bloco *lista_blocos, *novo_bloco;
-    condominio *cond_novo;
+    bloco *nova_lista_blocos, *novo_bloco;
+    condominio *novo_cond;
 
     novo_cond = (condominio *) malloc(sizeof(condominio));
-    if (cond_novo == NULL) return NULL;
+    if (novo_cond == NULL) return NULL;
 
-    for (i = 0, c = 'A'; i < qtd_blocos, i++)
+    nova_lista_blocos = NULL;
+    for (i = 0, c = 'A'; i < qtd_blocos; i++)
     {
-        novo_bloco = criar_novo_bloco(c + i, qtd_andares, qtd_apts);
-        if (novo_bloco = NULL)
+        novo_bloco = criar_novo_bloco(
+                (char) c + i,
+                qtd_andares[i],
+                qtd_apts[i]);
+
+        if (!(lista_enc_inserir_bloco(novo_bloco, &nova_lista_blocos))) 
         {
-            esvaziar_lista_blocos(&lista_blocos);
+            esvaziar_lista_blocos(&nova_lista_blocos);
             free(novo_cond);
             return NULL;
         }
-
-        if (!(lista_enc_inserir_bloco(
     }
 
-    cond_novo->bloco = lista_blocos;
+    novo_cond->lista_blocos = nova_lista_blocos;
 
-    strcpy(cond_novo->nome, nome);
-    strcpy(cond_novo->endereco_condominio.rua, rua);
-    cond_novo->endereco_condominio.num = num_rua;
-    cond_novo->prox = NULL;
+    strcpy(novo_cond->nome, nome);
+    strcpy(novo_cond->endereco_condominio.rua, rua);
+    novo_cond->endereco_condominio.num = num_rua;
+    novo_cond->prox = NULL;
 
-    return cond_novo;
+    return novo_cond;
 }
 
 bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts)
 {
-    bloco *novo_bloco = (*bloco) malloc(sizeof(bloco));
+    bloco *novo_bloco;
+    novo_bloco = (bloco *) malloc(sizeof(bloco));
     if (novo_bloco == NULL) return NULL;
 
     novo_bloco->letra = letra;

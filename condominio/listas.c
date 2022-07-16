@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "defs.h"
+#include "listas.h"
 
 int lista_enc_inserir_bloco(bloco *c, bloco **lista)
 {
@@ -32,7 +33,7 @@ bloco *lista_enc_remover_bloco(bloco **lista)
 
 void esvaziar_lista_blocos(bloco **lista_blocos)
 {
-    while (*lista_blocos->prox != NULL)
+    while (*lista_blocos != NULL)
         free(lista_enc_remover_bloco(lista_blocos));
 }
 
@@ -66,6 +67,6 @@ condominio *lista_enc_remover_condominio(condominio **lista)
 
 void esvaziar_lista_cond(condominio **lista_cond)
 {
-    while (*lista_cond->prox != NULL)
+    while (*lista_cond != NULL)
         free(lista_enc_remover_condominio(lista_cond));
 }

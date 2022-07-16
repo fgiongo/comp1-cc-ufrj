@@ -14,18 +14,6 @@ int main(void)
         switch (menu_principal())
         {
             case 1: /*inseir condomínio*/
-                lista_enc_inserir_condominio(
-                    novo_condominio(
-                        get_string(MAX_CHARS, "Nome: "),
-                        get_string(MAX_CHARS, "Nome da Rua: "),
-                        get_long(1, 99999999, "Número: "),
-
-                        /*resolver questão de vetores*/
-                        get_int(1, 26, "Quantidade de Blocos "),
-                        get_int(1, 100, "Quantidade de andares "),
-                        get_int(1, 20, "Quantidade de apt por andar ")
-                    )
-                )
                 break;
             case 2: /*remover condomínio*/
                 break;

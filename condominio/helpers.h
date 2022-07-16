@@ -8,9 +8,11 @@ condominio *criar_novo_condominio(
         char *rua,
         int num_rua,
         int qtd_blocos,
-        int *input_qtd_andares,
-        int *input_qtd_apts);
+        int *qtd_andares,
+        int *qtd_apts);
 
 bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts);
+
+
 
 void imprimir_dados(condominio *cond);
