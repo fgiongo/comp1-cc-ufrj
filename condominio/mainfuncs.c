@@ -111,6 +111,7 @@ static bloco *ler_blocos(FILE *arquivo)
         if (novo_bloco == NULL && lista_blocos != NULL)
         {
             esvaziar_lista_blocos(&lista_blocos);
+            return NULL;
         }
 
         fread(novo_bloco, sizeof(bloco), 1, arquivo);
@@ -142,6 +143,7 @@ condominio *ler_arquivo_salvo(FILE *arquivo)
         if (novo_cond == NULL && lista_cond != NULL)
         {
             esvaziar_lista_cond(&lista_cond);
+            return NULL;
         }
 
         fread(novo_cond, sizeof(condominio), 1, arquivo);

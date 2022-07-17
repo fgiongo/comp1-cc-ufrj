@@ -68,7 +68,10 @@ condominio *lista_enc_remover_condominio(condominio **lista)
 void esvaziar_lista_cond(condominio **lista_cond)
 {
     while (*lista_cond != NULL)
+    {
+        esvaziar_lista_blocos(&((*lista_cond)->lista_blocos));
         free(lista_enc_remover_condominio(lista_cond));
+    }
 }
 
 int remover_cond_por_nome(char *nome, condominio **lista)
