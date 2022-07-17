@@ -1,5 +1,5 @@
 #include "defs.h"
-#include "main.h"
+#include "mainfuncs.h"
 
 int main(void)
 {
@@ -18,6 +18,7 @@ int main(void)
                 break;
 
             case 2: /*remover condomínio*/
+                remover_condominio(&lista_condominios);
                 break;
             case 3: /*inserir bloco*/
                 break;
@@ -43,31 +44,3 @@ int main(void)
     return 0;
 }
 
-static void inserir_condominio(condominio **lista)
-{
-    condominio *novo_condominio;
-    int blocos, numero, *andares, *apts;
-    char *nome, *endereco;
-
-    nome = get_string(MAX_CHARS, "Nome do condominio: ");
-    endereco = get_string(MAX_CHARS, "Endereço (Rua): ");
-    numero = get_int(1, INT_MAX, "Endereço (Numero): ");
-    blocos = get_int(1, INT_MAX, "Numero de blocos: ");
-    andares = criar_vetor_andares(blocos);
-    apts = criar_vetor_apts(blocos);
-
-    novo_condominio = criar_novo_condominio(
-            nome,
-            endereco,
-            numero,
-            blocos,
-            andares,
-            apts);
-
-    free(andares);
-    free(apts);
-
-    lista_enc_inserir_condominio(
-            novo_condominio,
-            lista);
-}

@@ -4,7 +4,7 @@ void imprimir_condominio(condominio *cond)
 {
     bloco *ptr_bloco;
 
-    printf("Dados sobre condomínio %s:\n\n", cond->nome);
+    printf("\nDados sobre condomínio %s:\n", cond->nome);
     printf("Endereço: %s, %d\n",
             cond->endereco_condominio.rua,
             cond->endereco_condominio.num);
@@ -17,15 +17,8 @@ void imprimir_condominio(condominio *cond)
         printf("%d apartamentos por andar\n", ptr_bloco->qtd_apts);
         ptr_bloco = ptr_bloco->prox;
     }
-}
 
-void imprimir_lista_condominial(condominio *lista_cond)
-{
-    while (lista_cond != NULL)
-    {
-        imprimir_condominio(lista_cond);
-        lista_cond = lista_cond->prox;
-    }
+    printf("\n");
 }
 
 condominio *criar_novo_condominio(
@@ -48,10 +41,7 @@ condominio *criar_novo_condominio(
     nova_lista_blocos = NULL;
     for (i = 0, c = 'A'; i < qtd_blocos; i++)
     {
-        novo_bloco = criar_novo_bloco(
-                (char) c + i,
-                qtd_andares[i],
-                qtd_apts[i]);
+        novo_bloco = criar_novo_bloco((char) c + i, qtd_andares[i], qtd_apts[i]);
 
         if (!(lista_enc_inserir_bloco(novo_bloco, &nova_lista_blocos))) 
         {
@@ -85,24 +75,6 @@ bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts)
     return novo_bloco;
 }
 
-int menu_principal(void)
-{
-    char *titulo = "\nMenu Principal\n\n";
-    char *a = "(1) inserir condomínio\n";
-    char *b = "(2) remover condomínio\n";
-    char *c = "(3) inserir bloco\n";
-    char *d = "(4) remover bloco\n";
-    char *e = "(5) editar condominio\n";
-    char *f = "(6) editar bloco\n";
-    char *g = "(7) consultar condomínio\n";
-    char *h = "(8) listar condomínios\n";
-    char *i = "(9) sair\n";
-
-    printf("%s%s%s%s%s%s%s%s%s%s\n", titulo, a, b, c, d, e, f, g, h, i);
-
-    return get_int(1, 9, "Escolha opcao: ");
-}
-
 int *criar_vetor_andares(int num_blocos)
 {
     int *vetor_andares, i;
@@ -130,3 +102,4 @@ int *criar_vetor_apts(int num_blocos)
     
     return vetor_apts;
 }
+

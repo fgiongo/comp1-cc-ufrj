@@ -1,2 +1,2 @@
 condominio:
-		gcc -o condominio main.c helpers.c listas.c utils.c -Wall -ansi -pedantic
+		gcc -o condominio main.c mainfuncs.c helpers.c listas.c utils.c -Wall -ansi -pedantic

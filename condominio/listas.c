@@ -70,3 +70,36 @@ void esvaziar_lista_cond(condominio **lista_cond)
     while (*lista_cond != NULL)
         free(lista_enc_remover_condominio(lista_cond));
 }
+
+int remover_cond_por_nome(char *nome, condominio **lista)
+{
+    condominio *atual, *anterior;
+
+    atual = *lista;
+    if (strcmp(nome, atual->nome) == 0)
+    {
+        *lista = atual->prox;
+        esvaziar_lista_blocos(&(atual->lista_blocos));
+        free(atual);
+        return 1;
+    }
+
+    anterior = atual;
+    atual = atual->prox;
+
+    while (atual != NULL)
+    {
+        if (strcmp(nome, atual->nome) == 0)
+        {
+            anterior->prox = atual->prox;
+            esvaziar_lista_blocos(&(atual->lista_blocos));
+            free(atual);
+            return 1;
+        }
+
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    return 0;
+}

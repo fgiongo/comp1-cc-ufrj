@@ -15,3 +15,5 @@ void imprimir_lista_condominial(condominio *lista_cond);
 
 int *criar_vetor_andares(int num_blocos);
 int *criar_vetor_apts(int num_blocos);
+int inserir_condominio(condominio **lista);
+void remover_condominio(condominio **lista);
