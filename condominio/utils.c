@@ -1,5 +1,7 @@
-/* utils.c 
-   funções utilitárias simples e generalistas (não específicas ao programa em si)
+/*
+   utils.c 
+   funções utilitárias simples e generalistas
+   (não específicas ao programa em si)
 */
 
 #include <stdio.h>

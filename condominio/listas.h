@@ -1,5 +1,3 @@
-#include "defs.h"
-
 int lista_enc_inserir_bloco(bloco *c, bloco **lista);
 bloco *lista_enc_remover_bloco(bloco **lista);
 void esvaziar_lista_blocos(bloco **lista_blocos);

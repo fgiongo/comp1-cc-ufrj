@@ -1,6 +1,3 @@
-#include "defs.h"
-
-
 int menu_principal(void);
 
 condominio *criar_novo_condominio(
@@ -13,7 +10,8 @@ condominio *criar_novo_condominio(
 
 bloco *criar_novo_bloco(char letra, int qtd_andares, int qtd_apts);
 
-void imprimir_dados(condominio *cond);
+void imprimir_condominio(condominio *cond);
+void imprimir_lista_condominial(condominio *lista_cond);
 
 int *criar_vetor_andares(int num_blocos);
 int *criar_vetor_apts(int num_blocos);

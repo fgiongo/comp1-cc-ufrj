@@ -1,23 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "listas.h"
 #include "defs.h"
-#include "utils.h"
-#include "helpers.h"
 
-void imprimir_dados(condominio *cond)
+void imprimir_condominio(condominio *cond)
 {
+    bloco *ptr_bloco;
+
     printf("Dados sobre condomínio %s:\n\n", cond->nome);
     printf("Endereço: %s, %d\n",
             cond->endereco_condominio.rua,
             cond->endereco_condominio.num);
 
-    while (cond->lista_blocos != NULL)
+    ptr_bloco = cond->lista_blocos;
+    while (ptr_bloco != NULL)
     {
-        printf("Bloco %c:\n", cond->lista_blocos->letra);
-        printf("%d andares\n", cond->lista_blocos->qtd_andares);
-        printf("%d apartamentos por andar\n", cond->lista_blocos->qtd_apts);
+        printf("Bloco %c:\n", ptr_bloco->letra);
+        printf("%d andares\n", ptr_bloco->qtd_andares);
+        printf("%d apartamentos por andar\n", ptr_bloco->qtd_apts);
+        ptr_bloco = ptr_bloco->prox;
+    }
+}
+
+void imprimir_lista_condominial(condominio *lista_cond)
+{
+    while (lista_cond != NULL)
+    {
+        imprimir_condominio(lista_cond);
+        lista_cond = lista_cond->prox;
     }
 }
 
@@ -103,7 +110,7 @@ int *criar_vetor_andares(int num_blocos)
 
     for (i = 0; i < num_blocos; i++)
     {
-        printf("Bloco %d:/n", i + 1);
+        printf("Bloco %d:\n", i + 1);
         vetor_andares[i] = get_int(1, MAX_ANDARES, "Numero de andares: ");
     }
     
@@ -117,7 +124,7 @@ int *criar_vetor_apts(int num_blocos)
 
     for (i = 0; i < num_blocos; i++)
     {
-        printf("Bloco %d:/n", i + 1);
+        printf("Bloco %d:\n", i + 1);
         vetor_apts[i] = get_int(1, MAX_APTS, "Numero de apartamentos por andar: ");
     }
     
