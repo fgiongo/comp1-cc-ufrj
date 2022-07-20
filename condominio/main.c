@@ -9,24 +9,28 @@ int main(void)
     system("clear");
 
     arquivo_lista = fopen(LISTA_PATH, "r");
-    if (!arquivo_lista)
+    if (arquivo_lista)
+    {
+        lista_condominios = ler_arquivo_salvo(arquivo_lista);
+        fclose(arquivo_lista);
+    }
+    else
     {
         printf("Nenhum arquivo salvo encontrado, criando novo arquivo...\n");
-        arquivo_lista = fopen(LISTA_PATH, "w");
-        fclose(arquivo_lista);
-        arquivo_lista = fopen(LISTA_PATH, "r");
-    }
-    if (!arquivo_lista)
-    {
-        printf("Não foi possível criar novo arquivo. Encerrando.\n");
-        return 1;
-    }
 
-    lista_condominios = ler_arquivo_salvo(arquivo_lista);
-    fclose(arquivo_lista);
+        arquivo_lista = fopen(LISTA_PATH, "w");
+        if (arquivo_lista == NULL)
+        {
+            printf("Não foi possível criar arquivo, encerrando programa.\n");
+            return 1;
+        }
+
+        fclose(arquivo_lista);
+        lista_condominios = NULL;
+    }
 
     printf("\n\nBem-vindo ao Sistema de Controle da Imobiliária Tabajara\n\n");
-    printf("(versão beta 0.3)\n\n");
+    printf("(versão beta 0.5)\n\n");
 
     while(1)
     {

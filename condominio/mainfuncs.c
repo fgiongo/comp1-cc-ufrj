@@ -25,6 +25,8 @@ int inserir_condominio(condominio **lista)
 
     nome = get_string(MAX_CHARS, "Nome do condominio: ");
 
+    if (strlen(nome) == 0) return 0;
+
     if (buscar_por_condominio(*lista, nome))
     {
         printf("\nCondomínio já existente! \n");
@@ -62,11 +64,19 @@ int inserir_condominio(condominio **lista)
             novo_condominio,
             lista);
 
+    printf("\n\n Condomínio inserido com sucesso!\n\n");
+
     return 1;
 }
 
 void remover_condominio(condominio **lista)
 {
+    if (*lista == NULL)
+    {
+        printf("\nNão há condomínios cadastrados.\n\n");
+        return;
+    }
+
     if (remover_cond_por_nome(
                 get_string(MAX_CHARS, "\nRemover condominio\nNome: "),
                 lista))
@@ -78,6 +88,8 @@ void remover_condominio(condominio **lista)
 
 void imprimir_lista_condominial(condominio *lista)
 {
+    if (lista == NULL) printf("\nNenhum condomínio encontrado.\n\n");
+
     while (lista != NULL)
     {
         imprimir_condominio(lista);
