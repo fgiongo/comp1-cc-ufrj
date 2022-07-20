@@ -4,17 +4,17 @@ void imprimir_condominio(condominio *cond)
 {
     bloco *ptr_bloco;
 
-    printf("\nDados sobre condomínio %s:\n", cond->nome);
-    printf("Endereço: %s, %d\n",
+    printf("\nDados sobre condomínio %s:\n\n", cond->nome);
+    printf("\t*Endereço: %s, %d\n",
             cond->endereco_condominio.rua,
             cond->endereco_condominio.num);
 
     ptr_bloco = cond->lista_blocos;
     while (ptr_bloco != NULL)
     {
-        printf("Bloco %c:\n", ptr_bloco->letra);
-        printf("%d andares\n", ptr_bloco->qtd_andares);
-        printf("%d apartamentos por andar\n", ptr_bloco->qtd_apts);
+        printf("\t*Bloco %c:\n", ptr_bloco->letra);
+        printf("\t *%d andares\n", ptr_bloco->qtd_andares);
+        printf("\t *%d apartamentos por andar\n\n", ptr_bloco->qtd_apts);
         ptr_bloco = ptr_bloco->prox;
     }
 
@@ -103,3 +103,69 @@ int *criar_vetor_apts(int num_blocos)
     return vetor_apts;
 }
 
+condominio *buscar_por_condominio(condominio *lista, char *condominio_a_procurar)
+{
+
+    while (lista != NULL){
+
+        if (strcmp(lista->nome, condominio_a_procurar) != 0)
+        {
+            lista = lista->prox;
+            
+        }else return lista;
+    }
+
+    return NULL;
+}
+
+void renomear_blocos(bloco *lista)
+{
+    char c = 'A';
+
+    while (lista != NULL)
+    {
+        lista->letra = c;
+        c++;
+        lista = lista->prox;
+    }
+}
+
+int contar_blocos(bloco *lista)
+{
+    int i = 0;
+
+    while (lista != NULL)
+    {
+        i++;
+        lista = lista->prox;
+    }
+
+    return i;
+}
+
+bloco *buscar_bloco_por_letra(char c, bloco *lista)
+{
+    while (lista != NULL)
+    {
+        if (lista->letra == c) return lista;
+        lista = lista->prox;
+    }
+
+    return NULL;
+}
+
+condominio *buscar_cond_por_nome(condominio *lista)
+{
+    condominio *cond;
+    char *c = get_string(MAX_CHARS, "Inserir nome do condomínio: ");
+
+    cond = buscar_por_condominio(lista, c);
+
+    if (cond == NULL)
+    {
+        return NULL;
+
+    }else {
+        return cond;
+    }
+}

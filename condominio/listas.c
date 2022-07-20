@@ -106,3 +106,34 @@ int remover_cond_por_nome(char *nome, condominio **lista)
 
     return 0;
 }
+
+int remover_bloco_por_letra(char c, bloco **lista)
+{
+    bloco *anterior, *atual;
+
+    if (c == (*lista)->letra)
+    {
+        atual = *lista;
+        *lista = (*lista)->prox;
+        free(atual);
+        return 1;
+    }
+
+    anterior = *lista;
+    atual = (*lista)->prox;
+
+    while (atual != NULL)
+    {
+        if (atual->letra == c)
+        {
+            anterior->prox = atual->prox;
+            free(atual);
+            return 1;
+        }
+
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    return 0;
+}

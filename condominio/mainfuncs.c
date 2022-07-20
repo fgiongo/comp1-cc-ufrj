@@ -5,17 +5,16 @@ int menu_principal(void)
     char *titulo = "\nMenu Principal\n\n";
     char *a = "(1) inserir condomínio\n";
     char *b = "(2) remover condomínio\n";
-    char *c = "(3) inserir bloco(não disponível)\n";
-    char *d = "(4) remover bloco(não disponível)\n";
-    char *e = "(5) editar condominio(não disponível)\n";
-    char *f = "(6) editar bloco(não disponível)\n";
-    char *g = "(7) consultar condomínio(não disponível)\n";
-    char *h = "(8) listar todos os condomínios\n";
-    char *i = "(9) salvar e sair\n";
+    char *c = "(3) inserir bloco\n";
+    char *d = "(4) remover bloco\n";
+    char *f = "(5) editar bloco\n";
+    char *g = "(6) consultar condomínio por nome\n";
+    char *h = "(7) listar todos os condomínios\n";
+    char *i = "(8) salvar e sair\n";
 
-    printf("%s%s%s%s%s%s%s%s%s%s\n", titulo, a, b, c, d, e, f, g, h, i);
+    printf("%s%s%s%s%s%s%s%s%s\n", titulo, a, b, c, d, f, g, h, i);
 
-    return get_int(1, 9, "Escolha opcao: ");
+    return get_int(1, 8, "Escolha opcao: ");
 }
 
 int inserir_condominio(condominio **lista)
@@ -25,6 +24,13 @@ int inserir_condominio(condominio **lista)
     char *nome, *endereco;
 
     nome = get_string(MAX_CHARS, "Nome do condominio: ");
+
+    if (buscar_por_condominio(*lista, nome))
+    {
+        printf("\nCondomínio já existente! \n");
+        return 0;
+    }
+
     endereco = get_string(MAX_CHARS, "Endereço (Rua): ");
     numero = get_int(1, INT_MAX, "Endereço (Numero): ");
     blocos = get_int(1, INT_MAX, "Numero de blocos: ");
@@ -158,4 +164,127 @@ condominio *ler_arquivo_salvo(FILE *arquivo)
     while (!eh_ultimo);
 
     return lista_cond;
+}
+
+void consultar_por_condominio(condominio *lista)
+{
+    condominio *cond;
+
+    cond = buscar_cond_por_nome(lista);
+
+    if (cond == NULL)
+    {
+        printf("Não existe um condomínio com esse nome! \n");
+    }else {
+
+        imprimir_condominio(cond);
+    }
+}
+
+static bloco *criar_bloco(void)
+{
+    int apt, andar;
+    bloco *blocs;
+
+    blocs = (bloco *)malloc(sizeof(bloco));
+
+    if (blocs == NULL) return NULL;
+
+    andar = get_int(1, MAX_ANDARES, "Número de andares: ");
+    apt = get_int(1, MAX_APTS, "Número de Apts por andar: ");
+
+    blocs->qtd_andares = andar;
+    blocs->qtd_apts = apt;
+
+    return blocs;
+
+}
+
+void inserir_bloco(condominio *lista)
+{
+    condominio *cond;
+    bloco *b;
+
+    cond = buscar_cond_por_nome(lista);
+
+    if (cond == NULL)
+    {
+        printf("\nCondominio não encontrado!\n");
+        return;
+    }
+
+    if (contar_blocos(cond->lista_blocos) >= MAX_ALPHA)
+    {
+        printf("\nCondomínio com máxima ocupação de blocos \n");
+        return;
+    }
+
+    b = criar_bloco();
+
+    lista_enc_inserir_bloco(b, &(cond->lista_blocos));
+
+    renomear_blocos(cond->lista_blocos);
+
+    printf("\nBloco inserido com sucesso!\n");
+}
+
+void remover_bloco(condominio *lista)
+{
+    char c;
+    condominio *cond;
+
+    cond = buscar_cond_por_nome(lista);
+
+    if (cond == NULL)
+    {
+        printf("\nCondominio não encontrado!\n");
+        return;
+    }
+
+    imprimir_condominio(cond);
+
+    c = get_char("Selecione bloco a ser removido: ");
+
+    if (remover_bloco_por_letra(c, &(cond->lista_blocos)))
+    {
+        printf("\nBloco removido com sucesso\n");
+    }
+    else printf("\nBloco não encontrado!\n");
+
+    renomear_blocos(cond->lista_blocos);
+}
+
+void editar_bloco(condominio *lista)
+{
+    condominio *cond;
+    bloco *b;
+    char  c;
+    int andares, apts;
+
+    cond = buscar_cond_por_nome(lista);
+
+    if (cond == NULL)
+    {
+        printf("\nCondomínio não encontrado!\n");
+        return;
+    }
+
+    imprimir_condominio(cond);
+
+    c = get_char("Selecione bloco a ser editado: ");
+    b = buscar_bloco_por_letra(c, cond->lista_blocos);
+
+    if (b == NULL)
+    {
+        printf("\nBloco não encontrado!\n");
+        return;
+    }
+
+    andares = get_int(1, MAX_ANDARES, "Inserir número de andares: ");
+    apts = get_int(1, MAX_APTS, "Inserir número de apartamentos por andar: ");
+
+    b->qtd_andares = andares;
+    b->qtd_apts = apts;
+    
+    printf("\n\nBloco editado com sucesso!\n");
 }

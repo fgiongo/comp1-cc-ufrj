@@ -4,6 +4,7 @@
 #define MAX_CHARS 41
 #define MAX_ANDARES 163
 #define MAX_APTS 20
+#define MAX_ALPHA 26
 #define LISTA_PATH "./savefile"
 
 typedef struct _ENDERECO

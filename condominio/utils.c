@@ -78,5 +78,7 @@ char get_char(char * prompt)
     }
     while(c == '\n');
 
+	input_flush();
+
     return c;
 }
